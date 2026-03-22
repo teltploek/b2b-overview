@@ -130,6 +130,25 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 .c.conn-dim,.repo-card.conn-dim{opacity:.15!important;transition:opacity .2s}
 .c-sm.conn-dim{opacity:.15!important;transition:opacity .2s}
 .c:not(.conn-source):not(.conn-target):not(.conn-dim),.repo-card:not(.conn-target):not(.conn-dim){transition:opacity .2s}
+
+/* ── Expandable card details (PBI-format) ── */
+.c-expand{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .25s;padding:0 12px;border-top:0 solid rgba(79,109,245,.1);font-size:9px;color:#444;line-height:1.5}
+.c.expanded .c-expand{max-height:600px;padding:10px 12px 12px;border-top:1px solid rgba(79,109,245,.1)}
+.c-expand h5{font-size:8px;text-transform:uppercase;letter-spacing:.8px;color:#4f6df5;margin:6px 0 2px;font-weight:700}
+.c-expand h5:first-child{margin-top:0}
+.c-expand p{margin:0 0 4px;font-size:9px;color:#555}
+.c-expand .ac-list{margin:2px 0 0;padding-left:14px}
+.c-expand .ac-list li{font-size:8.5px;color:#555;padding:1px 0;list-style:disc}
+.c-expand .ac-list li::before{content:none}
+.c[data-expand]{cursor:pointer;position:relative}
+.c[data-expand]::after{content:'▾';position:absolute;top:10px;right:10px;font-size:9px;color:#bbb;transition:transform .25s}
+.c[data-expand].expanded::after{transform:rotate(180deg);color:#4f6df5}
+
+/* Status indicators */
+.status-badge{display:inline-flex;align-items:center;gap:3px;font-size:7.5px;padding:2px 6px;border-radius:3px;font-weight:600}
+.sb-ok{background:rgba(16,185,129,.1);color:#059669}
+.sb-warn{background:rgba(245,158,11,.1);color:#b45309}
+.sb-err{background:rgba(220,38,38,.1);color:#dc2626}
 </style>
 </head>
 <body>
@@ -167,7 +186,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
     <div class="zone-hdr"><h3 style="color:#059669">Core Systemer</h3><span class="sub">Kører i produktion lige nu</span></div>
     <div class="cards cards-4">
 
-      <div class="c" data-cat="prod" data-id="master-api" data-links="master-mod,api-san,promotion-api">
+      <div class="c" data-cat="prod" data-id="master-api" data-expand="1" data-links="master-mod,api-san,promotion-api">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">🗄️</div>
           <div><div class="c-t">Master API</div><div class="c-s">.NET · Razor Pages · EF Core</div></div></div>
         <div class="c-b"><ul>
@@ -176,9 +195,15 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Request/ordre workflow</li>
           <li>Proff API (CVR opslag)</li>
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t4">.NET</span></div></div>
+      
+        <div class="c-expand">
+<h5>Storyline</h5><p>Som sælger ønsker jeg adgang til kunder, ordrer og produkter via ét centralt system, så jeg kan håndtere hele salgsflowet effektivt.</p>
+<h5>Beskrivelse</h5><p>Master API er den centrale .NET-baserede backend der integrerer med e-conomic, Proff API og håndterer hele request/ordre-workflowet. Kører på Windows Server via NSSM.</p>
+<h5>Definition of Done</h5><p>Alle CRUD-endpoints responderer korrekt, e-conomic sync er aktiv, og CVR-opslag via Proff fungerer.</p>
+<h5>Acceptkriterier</h5><ul class="ac-list"><li>GET /customers returnerer pagineret liste</li><li>POST /orders opretter ordre i Master + e-conomic</li><li>Proff API CVR-opslag returnerer firmaoplysninger</li></ul></div>
       </div>
 
-      <div class="c" data-cat="prod" data-id="crm-dashboard" data-links="crm-api-docs,tidsreg,sport-admin">
+      <div class="c" data-cat="prod" data-id="crm-dashboard" data-expand="1" data-links="crm-api-docs,tidsreg,sport-admin">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">📈</div>
           <div><div class="c-t">B2B Group Dashboard</div><div class="c-s">Next.js 15.3 · zustand · dnd-kit · :3003</div></div></div>
         <div class="c-b"><ul>
@@ -189,9 +214,15 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t4">Next.js</span></div>
         <a class="c-repo" href="https://github.com/teltploek/b2b-crm-dashboard" target="_blank">b2b-crm-dashboard · 16 commits</a>
         <div class="act-bar"><div class="act-fill" style="width:22%;background:#34d399"></div></div></div>
+      
+        <div class="c-expand">
+<h5>Storyline</h5><p>Som medarbejder ønsker jeg ét samlet dashboard til salg, HR og økonomi, så jeg kan se alt relevant data ét sted.</p>
+<h5>Beskrivelse</h5><p>Next.js 15.3 dashboard med zustand state mgmt og dnd-kit drag-and-drop. Moduler: salgspipeline, HR vagtplan/ferie, finance, my-activity. Sentry-monitoreret (7 fejl/uge, primært AxiosError 400 på HR schedule). Cloudflare: 840 besøg/uge på b2bpromotion.dk.</p>
+<h5>Aktuel status</h5><p>AI-assisteret Giving material-mapping er under udvikling (Casper: "det må også kunne gøres direkte i Dashboard med AI"). Sentry viser 3 ongoing issues — AxiosError på /api/proxy endpoints.</p>
+<h5>Acceptkriterier</h5><ul class="ac-list"><li>Salgspipeline viser alle aktive requests</li><li>HR vagtplan tillader drag-and-drop</li><li>Finance-modul syncer med e-conomic</li><li>Sentry fejlrate under 5/uge</li></ul></div>
       </div>
 
-      <div class="c" data-id="promotion-api" data-links="ny-webshop,api-san,legacy-webshop" data-cat="prod">
+      <div class="c" data-id="promotion-api" data-expand="1" data-links="ny-webshop,api-san,legacy-webshop" data-cat="prod">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">🔌</div>
           <div><div class="c-t">Promotion API</div><div class="c-s">.NET 10 · Dual DB · Swagger</div></div></div>
         <div class="c-b"><ul>
@@ -199,9 +230,15 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Dual DB (v2 + nopCommerce)</li>
           <li>Produkter, kategorier, ordrer</li>
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t2">Kræver sanitering</span></div></div>
+      
+        <div class="c-expand">
+<h5>Storyline</h5><p>Som webshop-frontend ønsker jeg et stabilt REST API til produkter, kategorier og ordrer, så kunderne kan handle online.</p>
+<h5>Beskrivelse</h5><p>.NET 10 API med dual database (v2 + nopCommerce legacy). Swagger-dokumenteret. Nye customer endpoints implementeret: GET med telefon-søgning, POST med duplicate-check (PR #107). Kræver API sanitering for at fjerne hardcoded IPs og tilføje rate limiting.</p>
+<h5>Status fra backend (19-03)</h5><p>Nye customer endpoints (GET med telefon-søgning, POST) implementeret. Size SKU fixes og legacy child product migration til color SKUs. Mikkels webshop deployed på http://89.188.72.120:7002/.</p>
+<h5>Acceptkriterier</h5><ul class="ac-list"><li>GET /api/v1/Customers?phone=X returnerer match</li><li>POST /api/v1/Customers opretter med duplicate-check</li><li>Swagger dokumentation komplet for alle endpoints</li><li>Ingen hardcoded IPs i kodebasen</li></ul></div>
       </div>
 
-      <div class="c" data-id="fanshop" data-links="promotion-api,sport-web,sport-admin" data-cat="prod">
+      <div class="c" data-id="fanshop" data-expand="1" data-links="promotion-api,sport-web,sport-admin" data-cat="prod">
         <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🛒</div>
           <div><div class="c-t">RHK Fanshop</div><div class="c-s">Next.js 15.5 · Zod · zustand · :3009</div></div></div>
         <div class="c-b"><ul>
@@ -212,6 +249,12 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t6">E-commerce</span></div>
         <a class="c-repo" href="https://github.com/teltploek/b2b-fanshop" target="_blank">b2b-fanshop · 12 commits</a>
         <div class="act-bar"><div class="act-fill" style="width:16%;background:#ec4899"></div></div></div>
+      
+        <div class="c-expand">
+<h5>Storyline</h5><p>Som sportsfan ønsker jeg at købe klubtøj online med personalisering, så jeg kan få mit eget navn/nummer på trøjen.</p>
+<h5>Beskrivelse</h5><p>Next.js 15.5 e-commerce platform med danske routes (/kurv, /kasse, /produkt). Bambora/MobilePay betaling. Zod validation og zustand state. Deploy via Azure DevOps CI/CD til b2bpromotion.dk. Privatkunde-API integration (PBI 1806-1808) implementeret.</p>
+<h5>Aktive kunder</h5><p>RHK (Ribe HK): T-shirts (børn/voksen), shorts, hættetrøje, rygsæk, sportstaske med trykkoder (NMNAVNLA, NMNUMLA, NMNAVNSM). HIF Håndbold demo planlagt — logo og farver modtaget fra Casper.</p>
+<h5>Acceptkriterier</h5><ul class="ac-list"><li>Produkter vises med priser excl. moms</li><li>Personalisering (navn/nummer) på udvalgte produkter</li><li>Bambora betaling gennemføres uden fejl</li><li>Ordre synces til Master API</li></ul></div>
       </div>
 
     </div>
@@ -312,9 +355,11 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
       <div class="c-sm"><span class="ic">☁️</span><div><div class="nm">Azure Blob</div><div class="ds">Order logs</div></div></div>
       <div class="c-sm"><span class="ic">🔧</span><div><div class="nm">Azure DevOps</div><div class="ds">CI/CD pipelines + PBI sync</div></div></div>
       <div class="c-sm"><span class="ic">🐙</span><div><div class="nm">GitHub</div><div class="ds">teltploek · 8 B2B repos</div></div></div>
-      <div class="c-sm"><span class="ic">🐛</span><div><div class="nm">Sentry</div><div class="ds">Errors</div></div></div>
+      <div class="c-sm"><span class="ic">🐛</span><div><div class="nm">Sentry</div><div class="ds">7 errors/uge · 1.1k transactions · CRM HR Dashboard</div></div></div>
       <div class="c-sm"><span class="ic">💬</span><div><div class="nm">Discord</div><div class="ds">Alerts</div></div></div>
       <div class="c-sm"><span class="ic">📣</span><div><div class="nm">Teams</div><div class="ds">Deploy notifications</div></div></div>
+      <div class="c-sm"><span class="ic">📊</span><div><div class="nm">Cloudflare</div><div class="ds">Web Analytics · 840 visits/uge · b2bpromotion.dk</div></div></div>
+      <div class="c-sm"><span class="ic">🍎</span><div><div class="nm">Apple TestFlight</div><div class="ds">Warehouse App iOS distribution</div></div></div>
     </div>
   </div>
 
@@ -417,18 +462,6 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         <div class="act-bar"><div class="act-fill" style="width:18%;background:#8b5cf6"></div></div>
       </div>
 
-      <div class="repo-card">
-        <div class="rc-name">ds-dashboard</div>
-        <div class="rc-desc">Danske Spil data portal</div>
-        <div class="rc-meta">
-          <span class="rc-tag t4">Next.js 16</span>
-          <span class="rc-tag t7">recharts</span>
-          <span class="rc-date">Feb 2026</span>
-          <a class="rc-link" href="https://github.com/teltploek/ds-dashboard" target="_blank">→ repo</a>
-        </div>
-        <div class="act-bar"><div class="act-fill" style="width:33%;background:#0284c7"></div></div>
-      </div>
-
     </div>
     <div style="margin-top:10px;font-size:8px;color:#888">Fælles stack: TypeScript · Next.js · Tailwind CSS · Radix UI · shadcn · Azure DevOps CI/CD → Windows Server (NSSM) · Vercel (backlog + overview)</div>
   </div>
@@ -453,7 +486,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
     <div class="zone-hdr"><h3 style="color:#b45309">Under Aktiv Udvikling</h3><span class="sub">I gang nu — snart live</span></div>
     <div class="cards cards-4">
 
-      <div class="c" data-id="ny-webshop" data-links="promotion-api,legacy-webshop,master-api" data-cat="dev">
+      <div class="c" data-id="ny-webshop" data-expand="1" data-links="promotion-api,legacy-webshop,master-api" data-cat="dev">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">🛍️</div>
           <div><div class="c-t">Ny Promotion Webshop</div><div class="c-s">Next.js 15.5 · :3000</div></div></div>
         <div class="c-b"><ul>
@@ -463,9 +496,15 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Multi-language (DA/EN/SE)</li>
           <li>Erstatter nopCommerce</li>
         </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span></div></div>
+      
+        <div class="c-expand">
+<h5>Storyline</h5><p>Som B2B-kunde ønsker jeg en moderne webshop med minimal friktion, så jeg hurtigt kan bestille produkter med print.</p>
+<h5>Beskrivelse</h5><p>Next.js 15.5 webshop der erstatter nopCommerce. Konfigurator: farve→antal→dekoration. Multi-language (DA/EN/SE). Mikkel har bygget vareprøveforespørgsler i Master. Når "API 3.0" er klar, trækkes Toppoint-produkter automatisk ind.</p>
+<h5>Fremtidsplaner</h5><p>A/B test med udvalgte bestsellers for at få flere online bestillinger (Casper). Inspiration fra FastEditor, PromoTron og European Sourcing (promo-xl.com). Mikkels webshop kører pt. på http://89.188.72.120:7002/.</p>
+<h5>Acceptkriterier</h5><ul class="ac-list"><li>Checkout-flow under 3 klik</li><li>Print-placering visuelt konfigurerbar</li><li>API 3.0 integration med Toppoint produkter</li><li>Responsiv på mobil og tablet</li></ul></div>
       </div>
 
-      <div class="c" data-id="sport-admin" data-links="sport-web,crm-dashboard,fanshop" data-cat="dev">
+      <div class="c" data-id="sport-admin" data-expand="1" data-links="sport-web,crm-dashboard,fanshop" data-cat="dev">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">🏟️</div>
           <div><div class="c-t">Sport Admin Platform</div><div class="c-s">Next.js 15.3 · @tailwindcss/forms</div></div></div>
         <div class="c-b"><ul>
@@ -476,9 +515,14 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span></div>
         <a class="c-repo" href="https://github.com/teltploek/b2b-sport-admin" target="_blank">b2b-sport-admin · 8 commits</a>
         <div class="act-bar"><div class="act-fill" style="width:11%;background:#f59e0b"></div></div></div>
+      
+        <div class="c-expand">
+<h5>Storyline</h5><p>Som klub-administrator ønsker jeg et admin-panel til at styre roster, tøjaftaler og bestillinger, så jeg har fuldt overblik.</p>
+<h5>Beskrivelse</h5><p>Next.js 15.3 admin portal med @tailwindcss/forms. Multi-role auth: B2B admin, club admin, staff. Club management med roster, kit setup, agreements og order tracking.</p>
+<h5>Acceptkriterier</h5><ul class="ac-list"><li>Klub-admin kan logge ind og se eget roster</li><li>B2B admin kan se alle klubber</li><li>Kit setup syncer med Fanshop-produkter</li><li>Ordrehistorik tilgængelig per klub</li></ul></div>
       </div>
 
-      <div class="c" data-id="oppetid" data-cat="dev">
+      <div class="c" data-id="oppetid" data-expand="1" data-cat="dev">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">📡</div>
           <div><div class="c-t">Oppetids-monitorering</div><div class="c-s">Health checks · Alerting</div></div></div>
         <div class="c-b"><ul>
@@ -486,9 +530,15 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Alle services overvåget</li>
           <li>Alerting ved nedetid</li>
         </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span></div></div>
+      
+        <div class="c-expand">
+<h5>Storyline</h5><p>Som driftansvarlig ønsker jeg automatisk overvågning af alle services, så jeg straks ved når noget er nede.</p>
+<h5>Beskrivelse</h5><p>Health check system for alle B2B-services. PRD eksisterer allerede (connection leak). Alerting via Discord/Teams ved nedetid.</p>
+<h5>Aktuel status</h5><p>Server downtime rapporteret af Andreas (02-03): nedetid over weekenden, sket flere gange denne måned. Brian har identificeret et node.js-problem der ikke lukkes ordentligt. Root cause analyse i gang.</p>
+<h5>Acceptkriterier</h5><ul class="ac-list"><li>Alle services (port 3000-3009) checkes hvert 5. minut</li><li>Alert sendes inden 2 minutter efter nedetid</li><li>Dashboard viser uptime-historik per service</li><li>Auto-restart via NSSM ved crash</li></ul></div>
       </div>
 
-      <div class="c" data-id="ai-auto" data-cat="dev">
+      <div class="c" data-id="ai-auto" data-expand="1" data-cat="dev">
         <div class="c-h"><div class="c-ico" style="background:rgba(168,85,247,.1);color:#a855f7">🤖</div>
           <div><div class="c-t">AI & Automatisering</div><div class="c-s">Cowork · Ralph · Claude</div></div></div>
         <div class="c-b"><ul>
@@ -497,8 +547,28 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>AI samhandelsaftaler</li>
           <li>AI-tekster til sportsplaner</li>
         </ul><div style="margin-top:3px"><span class="tg t5">AI</span><span class="tg t1">Aktiv</span></div></div>
+      
+        <div class="c-expand">
+<h5>Storyline</h5><p>Som B2B Group ønsker vi at bruge AI til at automatisere gentagne opgaver og forbedre datakvalitet.</p>
+<h5>Beskrivelse</h5><p>AI-initiativer: Cowork til roadmap-styring, Ralph PRD-agent loop, AI-genererede samhandelsaftaler, AI-tekster til sportsplaner. AI-assisteret Giving material-mapping i Dashboard (Casper: "det må også kunne gøres direkte med AI").</p>
+<h5>Acceptkriterier</h5><ul class="ac-list"><li>Produktmapping Wizard bruger AI-oversættelse</li><li>Giving-materialer mappes via AI i Dashboard</li><li>PRD-dokumenter genereres via Ralph-agent</li></ul></div>
       </div>
 
+
+      <div class="c" data-id="warehouse-app" data-expand="1" data-cat="dev">
+        <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">📱</div>
+          <div><div class="c-t">Warehouse App</div><div class="c-s">Expo · React Native · TestFlight</div></div></div>
+        <div class="c-b"><ul>
+          <li>Lager-app til mobil (iOS)</li>
+          <li>Built med Expo framework</li>
+          <li>Submitted til Apple TestFlight</li>
+          <li>Developer account godkendt</li>
+        </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span><span class="tg t6">Mobile</span></div></div>
+        <div class="c-expand">
+<h5>Storyline</h5><p>Som lagermedarbejder ønsker jeg en mobil-app til lagerstyring, så jeg kan scanne og registrere varer direkte fra lageret.</p>
+<h5>Beskrivelse</h5><p>React Native app bygget med Expo framework. Deployed via TestFlight til Apple iOS. Apple Developer account godkendt (12-03). Andreas har submitted app'en til Apple for review.</p>
+<h5>Acceptkriterier</h5><ul class="ac-list"><li>App installeres via TestFlight på iOS</li><li>Barcode-scanning fungerer</li><li>Lageroptælling synces med Master API</li><li>Offline-mode med sync ved connectivity</li></ul></div>
+      </div>
     </div>
   </div>
 
@@ -515,7 +585,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 
     <div class="cards cards-4">
 
-      <div class="c" data-id="api-san" data-links="promotion-api,master-api" data-cat="plan">
+      <div class="c" data-id="api-san" data-expand="1" data-links="promotion-api,master-api" data-cat="plan">
         <div class="c-h"><div class="c-ico" style="background:rgba(79,109,245,.1);color:#4f6df5">🔧</div>
           <div><div class="c-t">API Sanitering</div><div class="c-s">Promotion + Master API</div></div></div>
         <div class="c-b"><ul>
@@ -525,6 +595,12 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Rate limiting & auth</li>
           <li>Fjern hardcoded IPs</li>
         </ul><div style="margin-top:3px"><span class="tg t3">Høj prioritet</span></div></div>
+      
+        <div class="c-expand">
+<h5>Storyline</h5><p>Som udvikler ønsker jeg et saniteret og sikkert API, så vi kan bygge videre på et stabilt fundament.</p>
+<h5>Beskrivelse</h5><p>Fase 1 i roadmap (Q1-Q2 2026). Connection leak fix, nye Customer CRUD endpoints, telefon-søgning, rate limiting, fjern hardcoded IPs. Backend-teamet har implementeret GET/POST customers (status 19-03).</p>
+<h5>Status fra backend</h5><p>PBI 1806 (seed MasterCustomerType), PBI 1807 (GET customers med telefon), PBI 1808 (POST customers) — alle implementeret og testet. PR #107 for duplicate check. Communications endpoint har en blokerende bug.</p>
+<h5>Acceptkriterier</h5><ul class="ac-list"><li>Ingen connection leaks i 7 dage</li><li>Alle customer endpoints CRUD-komplet</li><li>Rate limiting aktiv (100 req/min)</li><li>Ingen hardcoded IPs i kodebasen</li><li>Auth token validering på alle endpoints</li></ul></div>
       </div>
 
       <div class="c" data-id="master-mod" data-links="master-api,crm-dashboard" data-cat="plan">
@@ -577,8 +653,8 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </div>
         <div class="c" data-cat="client">
           <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🎯</div>
-            <div><div class="c-t">HIF + Bytoften</div><div class="c-s">Demo — logo modtaget</div></div></div>
-          <div class="c-b"><ul><li>Demo-build</li><li>Sport showcase</li></ul><span class="tg t6">Demo</span><span class="tg t3">Planlagt</span></div>
+            <div><div class="c-t">HIF Håndbold</div><div class="c-s">Demo — logo + farver modtaget</div></div></div>
+          <div class="c-b"><ul><li>Demo baseret på RHK-platform</li><li>Casper har sendt logo + farver</li><li>Sport showcase for ny klub</li></ul><span class="tg t6">Demo</span><span class="tg t2">I gang</span></div>
         </div>
         <div class="c" data-cat="client">
           <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">👔</div>
@@ -621,6 +697,17 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
             <div><div class="c-t">Mercoprint</div><div class="c-s">Logo + hjemmeside</div></div></div>
           <div class="c-b"><ul><li>Nyt logo design</li><li>Ny hjemmeside</li></ul><span class="tg t3">Planlagt</span></div>
         </div>
+
+        <div class="c" data-cat="new">
+          <div class="c-h"><div class="c-ico" style="background:rgba(168,85,247,.1);color:#a855f7">👔</div>
+            <div><div class="c-t">B2B Workwear</div><div class="c-s">Arbejdstøj-platform</div></div></div>
+          <div class="c-b"><ul><li>Nyt forretningsområde</li><li>Tilføjet af Casper til fremtidsliste</li></ul><span class="tg t5">Nyt koncept</span><span class="tg t3">Fremtid</span></div>
+        </div>
+        <div class="c" data-cat="new">
+          <div class="c-h"><div class="c-ico" style="background:rgba(168,85,247,.1);color:#a855f7">🎪</div>
+            <div><div class="c-t">B2B Expo</div><div class="c-s">Messe & events platform</div></div></div>
+          <div class="c-b"><ul><li>Messer og events</li><li>Tilføjet af Casper til fremtidsliste</li></ul><span class="tg t5">Nyt koncept</span><span class="tg t3">Fremtid</span></div>
+        </div>
       </div>
     </div>
 
@@ -631,16 +718,26 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
     <div class="zone-hdr"><h3 style="color:#dc2626">Backlog — Opgaver & Features</h3><span class="sub">Prioriteret liste</span></div>
     <div class="cards cards-auto">
 
-      <div class="c" data-id="archive-feat" data-cat="task">
+      <div class="c" data-id="archive-feat" data-expand="1" data-cat="task">
         <div class="c-h"><div class="c-ico" style="background:rgba(239,68,68,.1);color:#ef4444">📦</div>
           <div><div class="c-t">Archive Features</div><div class="c-s">Upload & faktura</div></div></div>
         <div class="c-b"><ul><li>Trykprøve upload</li><li>Gem salgsfaktura</li><li>Genbestilling tøj</li></ul><span class="tg t3">Feature</span></div>
+      
+        <div class="c-expand">
+<h5>Storyline</h5><p>Som sælger ønsker jeg at uploade trykprøver og gemme salgsfakturaer i systemet, så al dokumentation er samlet.</p>
+<h5>Beskrivelse</h5><p>Archive-funktioner i CRM Dashboard: "Trykprøve upload" = upload af print-prøver (proof of concept billeder) til godkendelse før produktion. "Gem salgsfaktura" = arkivering af faktura-PDF'er fra e-conomic. "Genbestilling tøj" = hurtig genbestilling baseret på tidligere ordrer.</p>
+<h5>Acceptkriterier</h5><ul class="ac-list"><li>Trykprøve-billeder kan uploades (maks 10MB, JPG/PNG/PDF)</li><li>Trykprøver knyttes til specifik ordre/request</li><li>Salgsfakturaer hentes automatisk fra e-conomic</li><li>Genbestilling pre-udfylder ordre med historiske data</li></ul></div>
       </div>
 
-      <div class="c" data-id="tidsreg" data-links="crm-dashboard" data-cat="task">
+      <div class="c" data-id="tidsreg" data-expand="1" data-links="crm-dashboard" data-cat="task">
         <div class="c-h"><div class="c-ico" style="background:rgba(139,92,246,.1);color:#8b5cf6">⏱️</div>
           <div><div class="c-t">Tidsregistrering</div><div class="c-s">HR · Vagter · Pauser</div></div></div>
         <div class="c-b"><ul><li>Start/slut registrering</li><li>Pause i lønflow</li><li>Eksport til bogholderi</li></ul><span class="tg t3">Feature</span><span class="tg t8">HR</span></div>
+      
+        <div class="c-expand">
+<h5>Storyline</h5><p>Som medarbejder ønsker jeg at registrere min arbejdstid med start/slut og pauser, så løn beregnes korrekt.</p>
+<h5>Beskrivelse</h5><p>Tidsregistrerings-modul i CRM Dashboard (HR-sektion). Integration med vagtplan. Start/slut registrering med pausehåndtering. Eksport til bogholderi for lønkørsel.</p>
+<h5>Acceptkriterier</h5><ul class="ac-list"><li>Medarbejder kan starte/stoppe tidsregistrering</li><li>Pauser fratrækkes automatisk</li><li>Data eksporteres i CSV/Excel til bogholderi</li><li>Vagtplan-integration viser forventet vs. faktisk tid</li></ul></div>
       </div>
 
       <div class="c" data-cat="task">
@@ -701,6 +798,9 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
       <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Fanshop produkter</div><div class="ds">Hardcoded per klub</div></div></div>
       <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Legacy dual-DB</div><div class="ds">nopCommerce afhængighed</div></div></div>
       <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">OpenAI API-nøgle</div><div class="ds">Ikke konfigureret i Data Center</div></div></div>
+      <div class="c-sm" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">Virus på B2BSport server</div><div class="ds">Windows Defender trojan — design demo, ikke produktion</div></div></div>
+      <div class="c-sm" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">Server nedetid (gentagen)</div><div class="ds">Node.js lukkes ikke korrekt — root cause analyse i gang</div></div></div>
+      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Azure subscription skiftet</div><div class="ds">Gammel slettet (blob logging tabt) — ny oprettet</div></div></div>
     </div>
   </div>
 
@@ -827,6 +927,20 @@ function updateSvgSize(){
 }
 updateSvgSize();
 new ResizeObserver(updateSvgSize).observe(document.querySelector('.board'));
+
+
+/* ── Expandable card click handler ── */
+document.querySelectorAll('[data-expand]').forEach(card => {
+  card.addEventListener('click', function(e) {
+    // Don't toggle if clicking a link
+    if(e.target.tagName === 'A') return;
+    this.classList.toggle('expanded');
+    // Close others
+    document.querySelectorAll('[data-expand].expanded').forEach(c => {
+      if(c !== this) c.classList.remove('expanded');
+    });
+  });
+});
 </script>
 </body>
 </html>
