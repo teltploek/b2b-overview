@@ -21,7 +21,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 
 #wrap{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden;cursor:grab}
 #wrap.g{cursor:grabbing}
-#cv{position:absolute;transform-origin:0 0;width:3200px}
+#cv{position:absolute;transform-origin:0 0;width:3400px}
 
 /* ── BOARD LAYOUT ── */
 .board{display:flex;gap:32px;padding:32px;align-items:flex-start}
@@ -77,6 +77,29 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 .c-sm .nm{font-size:10px;font-weight:600;color:#333}
 .c-sm .ds{font-size:8px;color:#888}
 
+/* Repo links */
+.c-repo{font-size:8px;color:#4f6df5;text-decoration:none;display:inline-flex;align-items:center;gap:2px;margin-top:2px;opacity:.7;transition:opacity .12s}
+.c-repo:hover{opacity:1;text-decoration:underline}
+.c-repo::before{content:'⌥';font-size:7px}
+
+/* Activity bar */
+.act-bar{height:3px;border-radius:2px;margin-top:4px;background:rgba(0,0,0,.04);overflow:hidden;position:relative}
+.act-fill{height:100%;border-radius:2px;transition:width .3s}
+
+/* Repo zone */
+.repo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.repo-card{border-radius:8px;background:#fff;border:1px solid rgba(0,0,0,.08);padding:10px 12px;transition:border-color .12s,box-shadow .12s}
+.repo-card:hover{border-color:rgba(79,109,245,.35);box-shadow:0 2px 10px rgba(79,109,245,.08)}
+.repo-card .rc-name{font-size:11px;font-weight:700;color:#1a1a2e;margin-bottom:2px}
+.repo-card .rc-desc{font-size:9px;color:#888;margin-bottom:4px}
+.repo-card .rc-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.rc-tag{font-size:7.5px;padding:1px 5px;border-radius:3px;font-weight:600;letter-spacing:.2px;display:inline-block}
+.rc-commits{font-size:8px;color:#888;display:flex;align-items:center;gap:2px}
+.rc-commits::before{content:'●';font-size:5px;color:#34d399}
+.rc-link{font-size:8px;color:#4f6df5;text-decoration:none;margin-left:auto;opacity:.6}
+.rc-link:hover{opacity:1;text-decoration:underline}
+.rc-date{font-size:7.5px;color:#aaa}
+
 /* Phase bars */
 .phases{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
 .ph{height:26px;border-radius:5px;display:flex;align-items:center;padding:0 10px;gap:6px;font-size:9px;font-weight:600;color:#fff;border:1px solid rgba(0,0,0,.06);flex:1;min-width:180px}
@@ -90,6 +113,23 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 
 /* Minimap */
 #mm{position:fixed;bottom:10px;right:10px;z-index:999;width:180px;height:100px;background:rgba(255,255,255,.95);border:1px solid rgba(0,0,0,.1);border-radius:6px;overflow:hidden;cursor:pointer;backdrop-filter:blur(10px)}
+
+/* Connection overlay */
+#conn-svg{position:absolute;top:0;left:0;pointer-events:none;z-index:10;overflow:visible}
+.conn-line{stroke:rgba(79,109,245,.6);stroke-width:2;fill:none;stroke-dasharray:6,3;opacity:0;transition:opacity .25s}
+.conn-line.active{opacity:1;animation:dashFlow 1s linear infinite}
+.conn-arrow{fill:rgba(79,109,245,.7);opacity:0;transition:opacity .25s}
+.conn-arrow.active{opacity:1}
+@keyframes dashFlow{to{stroke-dashoffset:-9}}
+
+/* Card hover-highlight states */
+.c.conn-source{border-color:rgba(79,109,245,.5)!important;box-shadow:0 0 16px rgba(79,109,245,.18)!important;z-index:11;position:relative}
+.c.conn-target{border-color:rgba(79,109,245,.4)!important;box-shadow:0 0 12px rgba(79,109,245,.14)!important;z-index:11;position:relative}
+.c.conn-target .c-t{color:#4f6df5!important}
+.repo-card.conn-target{border-color:rgba(79,109,245,.4)!important;box-shadow:0 0 12px rgba(79,109,245,.14)!important}
+.c.conn-dim,.repo-card.conn-dim{opacity:.15!important;transition:opacity .2s}
+.c-sm.conn-dim{opacity:.15!important;transition:opacity .2s}
+.c:not(.conn-source):not(.conn-target):not(.conn-dim),.repo-card:not(.conn-target):not(.conn-dim){transition:opacity .2s}
 </style>
 </head>
 <body>
@@ -109,6 +149,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 
 <div id="wrap">
 <div id="cv">
+<svg id="conn-svg"></svg>
 <div class="board">
 
 <!-- ════════════════════════════════════════════════════ -->
@@ -126,7 +167,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
     <div class="zone-hdr"><h3 style="color:#059669">Core Systemer</h3><span class="sub">Kører i produktion lige nu</span></div>
     <div class="cards cards-4">
 
-      <div class="c" data-cat="prod">
+      <div class="c" data-cat="prod" data-id="master-api" data-links="master-mod,api-san,promotion-api">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">🗄️</div>
           <div><div class="c-t">Master API</div><div class="c-s">.NET · Razor Pages · EF Core</div></div></div>
         <div class="c-b"><ul>
@@ -137,36 +178,40 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t4">.NET</span></div></div>
       </div>
 
-      <div class="c" data-cat="prod">
+      <div class="c" data-cat="prod" data-id="crm-dashboard" data-links="crm-api-docs,tidsreg,sport-admin">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">📈</div>
-          <div><div class="c-t">Dashboard (CRM+HR)</div><div class="c-s">Next.js 14 · shadcn/ui · :3003</div></div></div>
+          <div><div class="c-t">B2B Group Dashboard</div><div class="c-s">Next.js 15.3 · zustand · dnd-kit · :3003</div></div></div>
         <div class="c-b"><ul>
           <li>Salgspipeline & ordrestyring</li>
-          <li>HR skemaer & vagtplanlægning</li>
-          <li>Fanshop log viewer</li>
-          <li>Ralph agent system</li>
-        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t4">Next.js</span></div></div>
+          <li>HR: vagtplan, ferie, godkendelser</li>
+          <li>Finance & my-activity moduler</li>
+          <li>Auth integration & i18n</li>
+        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t4">Next.js</span></div>
+        <a class="c-repo" href="https://github.com/teltploek/b2b-crm-dashboard" target="_blank">b2b-crm-dashboard · 16 commits</a>
+        <div class="act-bar"><div class="act-fill" style="width:22%;background:#34d399"></div></div></div>
       </div>
 
-      <div class="c" data-cat="prod">
+      <div class="c" data-id="promotion-api" data-links="ny-webshop,api-san,legacy-webshop" data-cat="prod">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">🔌</div>
           <div><div class="c-t">Promotion API</div><div class="c-s">.NET 10 · Dual DB · Swagger</div></div></div>
         <div class="c-b"><ul>
-          <li>REST API til ny webshop</li>
+          <li>REST API til Ny Promotion Webshop</li>
           <li>Dual DB (v2 + nopCommerce)</li>
           <li>Produkter, kategorier, ordrer</li>
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t2">Kræver sanitering</span></div></div>
       </div>
 
-      <div class="c" data-cat="prod">
+      <div class="c" data-id="fanshop" data-links="promotion-api,sport-web,sport-admin" data-cat="prod">
         <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🛒</div>
-          <div><div class="c-t">RHK Fanshop</div><div class="c-s">Next.js 15 · MobilePay · :3009</div></div></div>
+          <div><div class="c-t">RHK Fanshop</div><div class="c-s">Next.js 15.5 · Zod · zustand · :3009</div></div></div>
         <div class="c-b"><ul>
-          <li>Sæsonbaseret merchandise</li>
-          <li>Personalisering (navn/nummer)</li>
+          <li>Danske routes: /kurv, /kasse, /produkt</li>
+          <li>Personalisering (react-hook-form)</li>
           <li>Bambora/MobilePay betaling</li>
-          <li>Azure Blob event log</li>
-        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t6">E-commerce</span></div></div>
+          <li>Deploy via ADO → b2bpromotion.dk</li>
+        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t6">E-commerce</span></div>
+        <a class="c-repo" href="https://github.com/teltploek/b2b-fanshop" target="_blank">b2b-fanshop · 12 commits</a>
+        <div class="act-bar"><div class="act-fill" style="width:16%;background:#ec4899"></div></div></div>
       </div>
 
     </div>
@@ -177,7 +222,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
     <div class="zone-hdr"><h3 style="color:#0284c7">Data Control Center</h3><span class="sub">Datakontrol-modul — ugentlig leverandørdata-rutine</span></div>
     <div class="cards cards-3">
 
-      <div class="c" data-cat="prod">
+      <div class="c" data-id="advarsels-dash" data-links="data-center,prisstyring" data-cat="prod">
         <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">🔔</div>
           <div><div class="c-t">Advarselsdashboard</div><div class="c-s">7 alert-kategorier · Filtrering</div></div></div>
         <div class="c-b"><ul>
@@ -189,7 +234,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t7">Data</span></div></div>
       </div>
 
-      <div class="c" data-cat="prod">
+      <div class="c" data-id="mapping-wizard" data-links="data-center,advarsels-dash" data-cat="prod">
         <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">🗺️</div>
           <div><div class="c-t">Produktmapping Wizard</div><div class="c-s">4-trins guide · AI-oversættelse</div></div></div>
         <div class="c-b"><ul>
@@ -201,7 +246,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t5">AI</span></div></div>
       </div>
 
-      <div class="c" data-cat="prod">
+      <div class="c" data-id="prisstyring" data-links="advarsels-dash,mapping-wizard" data-cat="prod">
         <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">💰</div>
           <div><div class="c-t">Prisstyring</div><div class="c-s">6 tier-niveauer · Markup-beregning</div></div></div>
         <div class="c-b"><ul>
@@ -214,7 +259,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
       </div>
 
     </div>
-    <div style="margin-top:8px;font-size:8px;color:#555">Datakilder: PF Concept · Midocean · Xindao · ID · New Wave · Texet · Neutral · Storm Textil — ugentlig sync via REST API</div>
+    <div style="margin-top:8px;font-size:8px;color:#555">Datakilder: PF Concept · Midocean · Xindao · ID · New Wave · Texet · Neutral · Storm Textil — ugentlig sync via REST API · <a href="https://www.youtube.com/watch?v=qo8G0PA-fqg" target="_blank" style="color:#4f6df5;text-decoration:none">▶ Se konceptvideo</a></div>
   </div>
 
   <!-- ZONE: Websites & Tools -->
@@ -222,34 +267,37 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
     <div class="zone-hdr"><h3 style="color:#3b5ce4">Websites & Tools</h3><span class="sub">Marketing sites, plugins, medieproduktion</span></div>
     <div class="cards cards-5">
 
-      <div class="c" data-cat="prod">
+      <div class="c" data-id="group-web" data-cat="prod">
         <div class="c-h"><div class="c-ico" style="background:rgba(79,109,245,.1);color:#4f6df5">🌐</div>
-          <div><div class="c-t">Group Website</div><div class="c-s">Next.js 15 · :3008</div></div></div>
-        <div class="c-b"><ul><li>Moderselskab</li><li>Alle datterselskaber</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div></div>
+          <div><div class="c-t">Group Website</div><div class="c-s">Next.js 15.5 · i18n · :3008</div></div></div>
+        <div class="c-b"><ul><li>Moderselskab profil</li><li>Google Maps integration</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div>
+        <a class="c-repo" href="https://github.com/teltploek/b2bgroup" target="_blank">b2bgroup · 13 commits</a></div>
       </div>
 
-      <div class="c" data-cat="prod">
+      <div class="c" data-id="sport-web" data-links="sport-admin,fanshop,b2bsport-repo" data-cat="prod">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">⚽</div>
-          <div><div class="c-t">Sport Website</div><div class="c-s">Next.js 14 · :3002</div></div></div>
-        <div class="c-b"><ul><li>b2bsport.dk</li><li>DA / EN / DE</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div></div>
+          <div><div class="c-t">Sport Website</div><div class="c-s">Next.js 14 · XY Flow · :3002</div></div></div>
+        <div class="c-b"><ul><li>b2bsport.dk — mest aktive repo</li><li>DA / EN · workflow redesign</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div>
+        <a class="c-repo" href="https://github.com/teltploek/b2bsport" target="_blank">b2bsport · 73 commits</a>
+        <div class="act-bar"><div class="act-fill" style="width:100%;background:#34d399"></div></div></div>
       </div>
 
-      <div class="c" data-cat="prod">
+      <div class="c" data-id="outlook-plugin" data-cat="prod">
         <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">📧</div>
           <div><div class="c-t">Outlook Plugin</div><div class="c-s">Office Add-in</div></div></div>
         <div class="c-b"><ul><li>Promotion i Outlook</li><li>Desktop + Web</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div></div>
       </div>
 
-      <div class="c" data-cat="prod">
+      <div class="c" data-id="led-banners" data-cat="prod">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">📺</div>
           <div><div class="c-t">LED Banners</div><div class="c-s">Bash/ffmpeg</div></div></div>
         <div class="c-b"><ul><li>Team Esbjerg</li><li>TMS Ringsted</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div></div>
       </div>
 
-      <div class="c" data-cat="prod">
+      <div class="c" data-id="legacy-webshop" data-links="ny-webshop,promotion-api" data-cat="prod">
         <div class="c-h"><div class="c-ico" style="background:rgba(239,68,68,.1);color:#ef4444">🗃️</div>
           <div><div class="c-t">Legacy Webshop</div><div class="c-s">nopCommerce · .NET</div></div></div>
-        <div class="c-b"><ul><li>Erstattes af ny webshop</li><li>DB bruges stadig</li></ul><div style="margin-top:3px"><span class="tg t3">Legacy</span></div></div>
+        <div class="c-b"><ul><li>Erstattes af Ny Promotion Webshop</li><li>DB bruges stadig af Promotion API</li></ul><div style="margin-top:3px"><span class="tg t3">Legacy</span></div></div>
       </div>
 
     </div>
@@ -262,9 +310,11 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
       <div class="c-sm"><span class="ic">💳</span><div><div class="nm">Bambora</div><div class="ds">Betalinger</div></div></div>
       <div class="c-sm"><span class="ic">📒</span><div><div class="nm">e-conomic</div><div class="ds">Regnskab</div></div></div>
       <div class="c-sm"><span class="ic">☁️</span><div><div class="nm">Azure Blob</div><div class="ds">Order logs</div></div></div>
-      <div class="c-sm"><span class="ic">🔧</span><div><div class="nm">Azure DevOps</div><div class="ds">CI/CD</div></div></div>
+      <div class="c-sm"><span class="ic">🔧</span><div><div class="nm">Azure DevOps</div><div class="ds">CI/CD pipelines + PBI sync</div></div></div>
+      <div class="c-sm"><span class="ic">🐙</span><div><div class="nm">GitHub</div><div class="ds">teltploek · 8 B2B repos</div></div></div>
       <div class="c-sm"><span class="ic">🐛</span><div><div class="nm">Sentry</div><div class="ds">Errors</div></div></div>
       <div class="c-sm"><span class="ic">💬</span><div><div class="nm">Discord</div><div class="ds">Alerts</div></div></div>
+      <div class="c-sm"><span class="ic">📣</span><div><div class="nm">Teams</div><div class="ds">Deploy notifications</div></div></div>
     </div>
   </div>
 
@@ -272,10 +322,115 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   <div class="zone" style="background:rgba(79,109,245,.04)">
     <div class="zone-hdr"><h3 style="color:#3b5ce4">Infrastruktur</h3></div>
     <div class="cards cards-3">
-      <div class="c-sm"><span class="ic">🖥️</span><div><div class="nm">Windows Server / IIS</div><div class="ds">Self-hosted · Alle apps kører her</div></div></div>
+      <div class="c-sm"><span class="ic">🖥️</span><div><div class="nm">Windows Server / NSSM</div><div class="ds">Self-hosted · C:\B2BGroupApplications\</div></div></div>
       <div class="c-sm"><span class="ic">🗃️</span><div><div class="nm">SQL Server</div><div class="ds">Dual DB: v2 + nopCommerce legacy</div></div></div>
-      <div class="c-sm"><span class="ic">🔢</span><div><div class="nm">Porte: 3000 · 3002 · 3003 · 3008 · 3009</div><div class="ds">Service endpoints</div></div></div>
+      <div class="c-sm"><span class="ic">🔢</span><div><div class="nm">Porte: 3000 · 3002 · 3003 · 3008 · 3009</div><div class="ds">Service endpoints via NSSM</div></div></div>
     </div>
+  </div>
+
+  <!-- ZONE: Source Code & Repos -->
+  <div class="zone" style="background:rgba(30,30,30,.03)">
+    <div class="zone-hdr"><h3 style="color:#333">Source Code — GitHub Repos</h3><span class="sub">github.com/teltploek · TypeScript + Next.js</span></div>
+    <div class="repo-grid">
+
+      <div class="repo-card">
+        <div class="rc-name">b2bsport</div>
+        <div class="rc-desc">B2B Sport website — b2bsport.dk</div>
+        <div class="rc-meta">
+          <span class="rc-tag t4">Next.js 14</span>
+          <span class="rc-tag t1">73 commits</span>
+          <span class="rc-date">Feb 2026</span>
+          <a class="rc-link" href="https://github.com/teltploek/b2bsport" target="_blank">→ repo</a>
+        </div>
+        <div class="act-bar"><div class="act-fill" style="width:100%;background:#34d399"></div></div>
+      </div>
+
+      <div class="repo-card">
+        <div class="rc-name">b2b-crm-dashboard</div>
+        <div class="rc-desc">CRM + HR + Finance dashboard</div>
+        <div class="rc-meta">
+          <span class="rc-tag t4">Next.js 15.3</span>
+          <span class="rc-tag t1">16 commits</span>
+          <span class="rc-date">Sep 2025</span>
+          <a class="rc-link" href="https://github.com/teltploek/b2b-crm-dashboard" target="_blank">→ repo</a>
+        </div>
+        <div class="act-bar"><div class="act-fill" style="width:22%;background:#4f6df5"></div></div>
+      </div>
+
+      <div class="repo-card">
+        <div class="rc-name">b2bproductbacklog</div>
+        <div class="rc-desc">Product backlog board · ADO sync</div>
+        <div class="rc-meta">
+          <span class="rc-tag t4">Next.js 15</span>
+          <span class="rc-tag t7">Drizzle+PG</span>
+          <span class="rc-date">Feb 2026</span>
+          <a class="rc-link" href="https://github.com/teltploek/b2bproductbacklog" target="_blank">→ repo</a>
+        </div>
+        <div class="act-bar"><div class="act-fill" style="width:14%;background:#0284c7"></div></div>
+      </div>
+
+      <div class="repo-card">
+        <div class="rc-name">b2bgroup</div>
+        <div class="rc-desc">Parent company website</div>
+        <div class="rc-meta">
+          <span class="rc-tag t4">Next.js 15.5</span>
+          <span class="rc-tag t1">13 commits</span>
+          <span class="rc-date">Oct 2025</span>
+          <a class="rc-link" href="https://github.com/teltploek/b2bgroup" target="_blank">→ repo</a>
+        </div>
+        <div class="act-bar"><div class="act-fill" style="width:18%;background:#4f6df5"></div></div>
+      </div>
+
+      <div class="repo-card">
+        <div class="rc-name">b2b-fanshop</div>
+        <div class="rc-desc">RHK Fanshop · b2bpromotion.dk</div>
+        <div class="rc-meta">
+          <span class="rc-tag t4">Next.js 15.5</span>
+          <span class="rc-tag t1">12 commits</span>
+          <span class="rc-date">Nov 2025</span>
+          <a class="rc-link" href="https://github.com/teltploek/b2b-fanshop" target="_blank">→ repo</a>
+        </div>
+        <div class="act-bar"><div class="act-fill" style="width:16%;background:#ec4899"></div></div>
+      </div>
+
+      <div class="repo-card">
+        <div class="rc-name">b2b-sport-admin</div>
+        <div class="rc-desc">Club management admin portal</div>
+        <div class="rc-meta">
+          <span class="rc-tag t4">Next.js 15.3</span>
+          <span class="rc-tag t1">8 commits</span>
+          <span class="rc-date">Apr 2025</span>
+          <a class="rc-link" href="https://github.com/teltploek/b2b-sport-admin" target="_blank">→ repo</a>
+        </div>
+        <div class="act-bar"><div class="act-fill" style="width:11%;background:#f59e0b"></div></div>
+      </div>
+
+      <div class="repo-card" data-id="crm-api-docs" data-links="crm-dashboard">
+        <div class="rc-name">b2b-crm-api-docs</div>
+        <div class="rc-desc">API documentation for CRM</div>
+        <div class="rc-meta">
+          <span class="rc-tag t4">TypeScript</span>
+          <span class="rc-tag t1">13 commits</span>
+          <span class="rc-date">Sep 2025</span>
+          <a class="rc-link" href="https://github.com/teltploek/b2b-crm-api-docs" target="_blank">→ repo</a>
+        </div>
+        <div class="act-bar"><div class="act-fill" style="width:18%;background:#8b5cf6"></div></div>
+      </div>
+
+      <div class="repo-card">
+        <div class="rc-name">ds-dashboard</div>
+        <div class="rc-desc">Danske Spil data portal</div>
+        <div class="rc-meta">
+          <span class="rc-tag t4">Next.js 16</span>
+          <span class="rc-tag t7">recharts</span>
+          <span class="rc-date">Feb 2026</span>
+          <a class="rc-link" href="https://github.com/teltploek/ds-dashboard" target="_blank">→ repo</a>
+        </div>
+        <div class="act-bar"><div class="act-fill" style="width:33%;background:#0284c7"></div></div>
+      </div>
+
+    </div>
+    <div style="margin-top:10px;font-size:8px;color:#888">Fælles stack: TypeScript · Next.js · Tailwind CSS · Radix UI · shadcn · Azure DevOps CI/CD → Windows Server (NSSM) · Vercel (backlog + overview)</div>
   </div>
 
 </div>
@@ -298,7 +453,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
     <div class="zone-hdr"><h3 style="color:#b45309">Under Aktiv Udvikling</h3><span class="sub">I gang nu — snart live</span></div>
     <div class="cards cards-4">
 
-      <div class="c" data-cat="dev">
+      <div class="c" data-id="ny-webshop" data-links="promotion-api,legacy-webshop,master-api" data-cat="dev">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">🛍️</div>
           <div><div class="c-t">Ny Promotion Webshop</div><div class="c-s">Next.js 15.5 · :3000</div></div></div>
         <div class="c-b"><ul>
@@ -310,18 +465,20 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span></div></div>
       </div>
 
-      <div class="c" data-cat="dev">
+      <div class="c" data-id="sport-admin" data-links="sport-web,crm-dashboard,fanshop" data-cat="dev">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">🏟️</div>
-          <div><div class="c-t">Sport Platform</div><div class="c-s">Next.js 15.3 · Prisma · i18n</div></div></div>
+          <div><div class="c-t">Sport Admin Platform</div><div class="c-s">Next.js 15.3 · @tailwindcss/forms</div></div></div>
         <div class="c-b"><ul>
-          <li>Admin/management for Sport</li>
-          <li>Kanban-baseret ordrestyring</li>
-          <li>25+ klub-platforme</li>
-          <li>Robusthed & fejlhåndtering</li>
-        </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span></div></div>
+          <li>Club mgmt, roster, kit setup</li>
+          <li>Agreements & order tracking</li>
+          <li>Multi-role: B2B admin, club admin, staff</li>
+          <li>Auth med login + dashboard per rolle</li>
+        </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span></div>
+        <a class="c-repo" href="https://github.com/teltploek/b2b-sport-admin" target="_blank">b2b-sport-admin · 8 commits</a>
+        <div class="act-bar"><div class="act-fill" style="width:11%;background:#f59e0b"></div></div></div>
       </div>
 
-      <div class="c" data-cat="dev">
+      <div class="c" data-id="oppetid" data-cat="dev">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">📡</div>
           <div><div class="c-t">Oppetids-monitorering</div><div class="c-s">Health checks · Alerting</div></div></div>
         <div class="c-b"><ul>
@@ -331,7 +488,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span></div></div>
       </div>
 
-      <div class="c" data-cat="dev">
+      <div class="c" data-id="ai-auto" data-cat="dev">
         <div class="c-h"><div class="c-ico" style="background:rgba(168,85,247,.1);color:#a855f7">🤖</div>
           <div><div class="c-t">AI & Automatisering</div><div class="c-s">Cowork · Ralph · Claude</div></div></div>
         <div class="c-b"><ul>
@@ -358,7 +515,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 
     <div class="cards cards-4">
 
-      <div class="c" data-cat="plan">
+      <div class="c" data-id="api-san" data-links="promotion-api,master-api" data-cat="plan">
         <div class="c-h"><div class="c-ico" style="background:rgba(79,109,245,.1);color:#4f6df5">🔧</div>
           <div><div class="c-t">API Sanitering</div><div class="c-s">Promotion + Master API</div></div></div>
         <div class="c-b"><ul>
@@ -370,7 +527,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t3">Høj prioritet</span></div></div>
       </div>
 
-      <div class="c" data-cat="plan">
+      <div class="c" data-id="master-mod" data-links="master-api,crm-dashboard" data-cat="plan">
         <div class="c-h"><div class="c-ico" style="background:rgba(139,92,246,.1);color:#8b5cf6">⚡</div>
           <div><div class="c-t">Master Modernisering</div><div class="c-s">Razor Pages → API-first</div></div></div>
         <div class="c-b"><ul>
@@ -382,7 +539,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t8">Modernisering</span></div></div>
       </div>
 
-      <div class="c" data-cat="plan">
+      <div class="c" data-id="data-center" data-links="advarsels-dash,mapping-wizard,prisstyring" data-cat="plan">
         <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">📊</div>
           <div><div class="c-t">Data Center Udvidelse</div><div class="c-s">Validering · Alarmer · Lager</div></div></div>
         <div class="c-b"><ul>
@@ -393,7 +550,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t7">Data</span><span class="tg t3">Planlagt</span></div></div>
       </div>
 
-      <div class="c" data-cat="plan">
+      <div class="c" data-id="sport-robust" data-links="sport-web,sport-admin" data-cat="plan">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">🏋️</div>
           <div><div class="c-t">Sport Robusthed</div><div class="c-s">Stabilitet + features</div></div></div>
         <div class="c-b"><ul>
@@ -444,7 +601,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
     <div class="zone" style="background:rgba(139,92,246,.04)">
       <div class="zone-hdr"><h3 style="color:#7c3aed">Nye Produkter</h3><span class="sub">Helt nye koncepter</span></div>
       <div class="cards cards-2">
-        <div class="c" data-cat="new" style="grid-column:span 2">
+        <div class="c" data-id="gaveshop" data-cat="new" style="grid-column:span 2">
           <div class="c-h"><div class="c-ico" style="background:rgba(168,85,247,.1);color:#a855f7">🎁</div>
             <div><div class="c-t">My Special Gift / Gaveshop</div><div class="c-s">Personaliserede firmajulegaver</div></div></div>
           <div class="c-b"><ul>
@@ -474,13 +631,13 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
     <div class="zone-hdr"><h3 style="color:#dc2626">Backlog — Opgaver & Features</h3><span class="sub">Prioriteret liste</span></div>
     <div class="cards cards-auto">
 
-      <div class="c" data-cat="task">
+      <div class="c" data-id="archive-feat" data-cat="task">
         <div class="c-h"><div class="c-ico" style="background:rgba(239,68,68,.1);color:#ef4444">📦</div>
           <div><div class="c-t">Archive Features</div><div class="c-s">Upload & faktura</div></div></div>
         <div class="c-b"><ul><li>Trykprøve upload</li><li>Gem salgsfaktura</li><li>Genbestilling tøj</li></ul><span class="tg t3">Feature</span></div>
       </div>
 
-      <div class="c" data-cat="task">
+      <div class="c" data-id="tidsreg" data-links="crm-dashboard" data-cat="task">
         <div class="c-h"><div class="c-ico" style="background:rgba(139,92,246,.1);color:#8b5cf6">⏱️</div>
           <div><div class="c-t">Tidsregistrering</div><div class="c-s">HR · Vagter · Pauser</div></div></div>
         <div class="c-b"><ul><li>Start/slut registrering</li><li>Pause i lønflow</li><li>Eksport til bogholderi</li></ul><span class="tg t3">Feature</span><span class="tg t8">HR</span></div>
@@ -561,6 +718,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   <div class="li"><div class="lc" style="background:#a855f7"></div> Nyt koncept</div>
   <div class="li"><div class="lc" style="background:#ec4899"></div> Kunde</div>
   <div class="li"><div class="lc" style="background:#06b6d4"></div> Data/Integration</div>
+  <div class="li"><div class="lc" style="background:#333"></div> Source Code</div>
 </div>
 
 <div id="mm"></div>
@@ -582,6 +740,93 @@ function rV(){s=.42;px=0;py=0;upd();}
 function doS(q){q=q.toLowerCase().trim();document.querySelectorAll('.c,.c-sm').forEach(c=>{if(!q){c.style.opacity='1';c.style.borderColor='';c.style.boxShadow='';return;}const m=c.textContent.toLowerCase().includes(q);c.style.opacity=m?'1':'.07';c.style.borderColor=m?'rgba(79,109,245,.5)':'';c.style.boxShadow=m?'0 0 12px rgba(79,109,245,.1)':'';});}
 document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.key==='f'||e.key==='F'){document.getElementById('qs').focus();e.preventDefault();}if(e.key==='Escape'){document.getElementById('qs').value='';doS('');document.getElementById('qs').blur();}if(e.key==='1')zTo(.22);if(e.key==='2')zTo(.42);if(e.key==='3')zTo(.7);if(e.key==='4')zTo(1);if(e.key==='r'||e.key==='R')rV();});
 upd();
+
+/* ── Connection system: hover-highlight related cards with SVG arrows ── */
+const svg=document.getElementById('conn-svg');
+const allCards=[...document.querySelectorAll('[data-id]')];
+const cardMap={};
+allCards.forEach(c=>cardMap[c.dataset.id]=c);
+
+function getCenter(el){
+  const r=el.getBoundingClientRect();
+  const cv=document.getElementById('cv').getBoundingClientRect();
+  return{x:(r.left+r.width/2-cv.left)/s, y:(r.top+r.height/2-cv.top)/s};
+}
+
+function drawArrow(from,to){
+  const a=getCenter(from),b=getCenter(to);
+  const dx=b.x-a.x,dy=b.y-a.y,dist=Math.sqrt(dx*dx+dy*dy);
+  if(dist<10)return;
+  // Curve control point
+  const mx=(a.x+b.x)/2,my=(a.y+b.y)/2;
+  const nx=-dy/dist*40,ny=dx/dist*40;
+  const cx=mx+nx,cy=my+ny;
+  const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d',`M${a.x},${a.y} Q${cx},${cy} ${b.x},${b.y}`);
+  path.classList.add('conn-line','active');
+  svg.appendChild(path);
+  // Arrowhead
+  const t=.92;
+  const px2=(1-t)*(1-t)*a.x+2*(1-t)*t*cx+t*t*b.x;
+  const py2=(1-t)*(1-t)*a.y+2*(1-t)*t*cy+t*t*b.y;
+  const ang=Math.atan2(b.y-py2,b.x-px2);
+  const sz=8;
+  const arrow=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+  const tip=b;
+  const l={x:tip.x-sz*Math.cos(ang-0.4),y:tip.y-sz*Math.sin(ang-0.4)};
+  const r2={x:tip.x-sz*Math.cos(ang+0.4),y:tip.y-sz*Math.sin(ang+0.4)};
+  arrow.setAttribute('points',`${tip.x},${tip.y} ${l.x},${l.y} ${r2.x},${r2.y}`);
+  arrow.classList.add('conn-arrow','active');
+  svg.appendChild(arrow);
+}
+
+function clearConns(){
+  svg.innerHTML='';
+  document.querySelectorAll('.conn-source,.conn-target,.conn-dim').forEach(el=>{
+    el.classList.remove('conn-source','conn-target','conn-dim');
+  });
+}
+
+function showConns(el){
+  clearConns();
+  const links=(el.dataset.links||'').split(',').filter(Boolean);
+  if(!links.length)return;
+  el.classList.add('conn-source');
+  const targets=[];
+  links.forEach(id=>{
+    const t=cardMap[id];
+    if(t){t.classList.add('conn-target');targets.push(t);drawArrow(el,t);}
+  });
+  // Also check reverse links (cards that link TO this card)
+  allCards.forEach(c=>{
+    if(c===el)return;
+    const cl=(c.dataset.links||'').split(',');
+    if(cl.includes(el.dataset.id)){
+      c.classList.add('conn-target');
+      targets.push(c);
+      drawArrow(c,el);
+    }
+  });
+  // Dim unrelated cards
+  document.querySelectorAll('.c,.c-sm,.repo-card').forEach(c=>{
+    if(c!==el&&!c.classList.contains('conn-target'))c.classList.add('conn-dim');
+  });
+}
+
+// Attach hover events to all linked cards
+allCards.forEach(el=>{
+  if(!el.dataset.links&&!allCards.some(c=>(c.dataset.links||'').split(',').includes(el.dataset.id)))return;
+  el.addEventListener('mouseenter',()=>showConns(el));
+  el.addEventListener('mouseleave',()=>clearConns());
+});
+
+// Update SVG size to match canvas
+function updateSvgSize(){
+  const board=document.querySelector('.board');
+  if(board){svg.setAttribute('width',board.scrollWidth);svg.setAttribute('height',board.scrollHeight);}
+}
+updateSvgSize();
+new ResizeObserver(updateSvgSize).observe(document.querySelector('.board'));
 </script>
 </body>
 </html>
