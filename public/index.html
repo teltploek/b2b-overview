@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B2B Group — Digital Ecosystem & Roadmap</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif;color:#1a1a2e}
+
+#bar{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(0,0,0,.08);display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:44px}
+#bar h1{font-size:14px;font-weight:600;color:#1a1a2e}
+#bar h1 b{color:#4f6df5}
+.tb{display:flex;gap:5px;align-items:center}
+.tb button{background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.1);color:#555;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:10px;transition:all .12s}
+.tb button:hover{background:rgba(79,109,245,.1);color:#1a1a2e}
+#zl{font-size:9px;color:#888;width:32px;text-align:center}
+#qs{background:#fff;border:1px solid rgba(0,0,0,.12);color:#1a1a2e;padding:4px 8px;border-radius:4px;font-size:10px;width:140px;outline:none}
+#qs::placeholder{color:#aaa}
+#qs:focus{border-color:#4f6df5}
+
+#wrap{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden;cursor:grab}
+#wrap.g{cursor:grabbing}
+#cv{position:absolute;transform-origin:0 0;width:3200px}
+
+/* ── BOARD LAYOUT ── */
+.board{display:flex;gap:32px;padding:32px;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:24px;flex-shrink:0}
+.col-now{width:1200px}
+.col-div{width:3px;background:linear-gradient(to bottom,transparent,rgba(0,0,0,.1),transparent);border-radius:2px;align-self:stretch;flex-shrink:0;margin:0 8px}
+.col-future{width:1400px}
+
+/* Column headers */
+.col-hdr{display:flex;align-items:center;gap:12px;padding:4px 0 8px}
+.col-hdr h2{font-size:20px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.col-hdr .pill{font-size:9px;padding:3px 10px;border-radius:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+
+/* ── ZONES ── */
+.zone{border-radius:14px;padding:16px;border:1px solid rgba(0,0,0,.06);background:#fff}
+.zone-hdr{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.zone-hdr h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+.zone-hdr .sub{font-size:10px;font-weight:400;color:rgba(0,0,0,.4);margin-left:4px}
+
+/* ── CARD GRID ── */
+.cards{display:grid;gap:10px}
+.cards-4{grid-template-columns:repeat(4,1fr)}
+.cards-3{grid-template-columns:repeat(3,1fr)}
+.cards-2{grid-template-columns:repeat(2,1fr)}
+.cards-5{grid-template-columns:repeat(5,1fr)}
+.cards-6{grid-template-columns:repeat(6,1fr)}
+.cards-auto{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+
+/* ── CARDS ── */
+.c{border-radius:9px;background:#fff;border:1px solid rgba(0,0,0,.08);overflow:hidden;transition:border-color .12s,box-shadow .12s}
+.c:hover{border-color:rgba(79,109,245,.35);box-shadow:0 2px 14px rgba(79,109,245,.1)}
+.c-h{padding:10px 12px 7px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(0,0,0,.05)}
+.c-ico{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.c-t{font-size:11px;font-weight:600;color:#1a1a2e;line-height:1.25}
+.c-s{font-size:9px;color:#888;margin-top:1px}
+.c-b{padding:7px 12px 10px}
+.c-b ul{list-style:none}
+.c-b li{font-size:9.5px;color:#555;padding:1px 0;display:flex;align-items:flex-start;gap:4px;line-height:1.3}
+.c-b li::before{content:'›';color:#aaa;flex-shrink:0;font-weight:bold}
+.tg{display:inline-block;font-size:7.5px;padding:1px 5px;border-radius:3px;margin:1px 1px 0 0;font-weight:600;letter-spacing:.2px}
+.t1{background:rgba(16,185,129,.1);color:#059669}
+.t2{background:rgba(217,119,6,.1);color:#b45309}
+.t3{background:rgba(220,38,38,.1);color:#dc2626}
+.t4{background:rgba(79,109,245,.1);color:#3b5ce4}
+.t5{background:rgba(139,92,246,.1);color:#7c3aed}
+.t6{background:rgba(219,39,119,.1);color:#be185d}
+.t7{background:rgba(14,165,233,.1);color:#0284c7}
+.t8{background:rgba(124,58,237,.1);color:#6d28d9}
+
+/* Small integration cards */
+.c-sm{padding:8px 10px;border-radius:7px;background:#fff;border:1px solid rgba(0,0,0,.08);display:flex;align-items:center;gap:7px}
+.c-sm .ic{font-size:11px}
+.c-sm .nm{font-size:10px;font-weight:600;color:#333}
+.c-sm .ds{font-size:8px;color:#888}
+
+/* Phase bars */
+.phases{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.ph{height:26px;border-radius:5px;display:flex;align-items:center;padding:0 10px;gap:6px;font-size:9px;font-weight:600;color:#fff;border:1px solid rgba(0,0,0,.06);flex:1;min-width:180px}
+.ph small{font-size:8px;color:rgba(255,255,255,.6);font-weight:400}
+
+/* Legend */
+#leg{position:fixed;bottom:10px;left:10px;z-index:999;background:rgba(255,255,255,.95);border:1px solid rgba(0,0,0,.1);border-radius:6px;padding:7px 10px;backdrop-filter:blur(10px)}
+#leg h4{font-size:8px;text-transform:uppercase;letter-spacing:.7px;color:#888;margin-bottom:3px}
+.li{display:flex;align-items:center;gap:5px;padding:1px 0;color:#555;font-size:8px}
+.lc{width:7px;height:7px;border-radius:2px;flex-shrink:0}
+
+/* Minimap */
+#mm{position:fixed;bottom:10px;right:10px;z-index:999;width:180px;height:100px;background:rgba(255,255,255,.95);border:1px solid rgba(0,0,0,.1);border-radius:6px;overflow:hidden;cursor:pointer;backdrop-filter:blur(10px)}
+</style>
+</head>
+<body>
+
+<div id="bar">
+  <h1><b>B2B Group</b> — Digital Ecosystem & Roadmap 2026</h1>
+  <div class="tb">
+    <input id="qs" type="text" placeholder="Søg… (F)" oninput="doS(this.value)">
+    <button onclick="zTo(.22)">Fuld</button>
+    <button onclick="zTo(.42)">Fit</button>
+    <button onclick="zTo(.7)">Mellem</button>
+    <button onclick="zTo(1)">1:1</button>
+    <span id="zl">42%</span>
+    <button onclick="rV()">⟲</button>
+  </div>
+</div>
+
+<div id="wrap">
+<div id="cv">
+<div class="board">
+
+<!-- ════════════════════════════════════════════════════ -->
+<!--  LEFT COLUMN: NU — LIVE SYSTEMER                    -->
+<!-- ════════════════════════════════════════════════════ -->
+<div class="col col-now">
+
+  <div class="col-hdr">
+    <h2 style="color:#059669">✦ Nu — Live Systemer</h2>
+    <span class="pill t1">I PRODUKTION</span>
+  </div>
+
+  <!-- ZONE: Core Systemer -->
+  <div class="zone" style="background:rgba(16,185,129,.04)">
+    <div class="zone-hdr"><h3 style="color:#059669">Core Systemer</h3><span class="sub">Kører i produktion lige nu</span></div>
+    <div class="cards cards-4">
+
+      <div class="c" data-cat="prod">
+        <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">🗄️</div>
+          <div><div class="c-t">Master API</div><div class="c-s">.NET · Razor Pages · EF Core</div></div></div>
+        <div class="c-b"><ul>
+          <li>Source of truth: Kunder, Ordrer, Produkter</li>
+          <li>Economics integration (e-conomic)</li>
+          <li>Request/ordre workflow</li>
+          <li>Proff API (CVR opslag)</li>
+        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t4">.NET</span></div></div>
+      </div>
+
+      <div class="c" data-cat="prod">
+        <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">📈</div>
+          <div><div class="c-t">Dashboard (CRM+HR)</div><div class="c-s">Next.js 14 · shadcn/ui · :3003</div></div></div>
+        <div class="c-b"><ul>
+          <li>Salgspipeline & ordrestyring</li>
+          <li>HR skemaer & vagtplanlægning</li>
+          <li>Fanshop log viewer</li>
+          <li>Ralph agent system</li>
+        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t4">Next.js</span></div></div>
+      </div>
+
+      <div class="c" data-cat="prod">
+        <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">🔌</div>
+          <div><div class="c-t">Promotion API</div><div class="c-s">.NET 10 · Dual DB · Swagger</div></div></div>
+        <div class="c-b"><ul>
+          <li>REST API til ny webshop</li>
+          <li>Dual DB (v2 + nopCommerce)</li>
+          <li>Produkter, kategorier, ordrer</li>
+        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t2">Kræver sanitering</span></div></div>
+      </div>
+
+      <div class="c" data-cat="prod">
+        <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🛒</div>
+          <div><div class="c-t">RHK Fanshop</div><div class="c-s">Next.js 15 · MobilePay · :3009</div></div></div>
+        <div class="c-b"><ul>
+          <li>Sæsonbaseret merchandise</li>
+          <li>Personalisering (navn/nummer)</li>
+          <li>Bambora/MobilePay betaling</li>
+          <li>Azure Blob event log</li>
+        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t6">E-commerce</span></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ZONE: Data Control Center -->
+  <div class="zone" style="background:rgba(14,165,233,.04)">
+    <div class="zone-hdr"><h3 style="color:#0284c7">Data Control Center</h3><span class="sub">Datakontrol-modul — ugentlig leverandørdata-rutine</span></div>
+    <div class="cards cards-3">
+
+      <div class="c" data-cat="prod">
+        <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">🔔</div>
+          <div><div class="c-t">Advarselsdashboard</div><div class="c-s">7 alert-kategorier · Filtrering</div></div></div>
+        <div class="c-b"><ul>
+          <li>Manglende parent/child SKU</li>
+          <li>Kostprisændringer (±5-10%)</li>
+          <li>Nye produkter & varianter</li>
+          <li>Ikke-på-lager tracking</li>
+          <li>Massehandlinger (løs/ignorer)</li>
+        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t7">Data</span></div></div>
+      </div>
+
+      <div class="c" data-cat="prod">
+        <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">🗺️</div>
+          <div><div class="c-t">Produktmapping Wizard</div><div class="c-s">4-trins guide · AI-oversættelse</div></div></div>
+        <div class="c-b"><ul>
+          <li>Trin 1: Beskrivelser (DA) + AI</li>
+          <li>Trin 2: Farve-mapping</li>
+          <li>Trin 3: Materiale & produkttype</li>
+          <li>Trin 4: Gennemgang & godkend</li>
+          <li>Batch-baseret per leverandør</li>
+        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t5">AI</span></div></div>
+      </div>
+
+      <div class="c" data-cat="prod">
+        <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">💰</div>
+          <div><div class="c-t">Prisstyring</div><div class="c-s">6 tier-niveauer · Markup-beregning</div></div></div>
+        <div class="c-b"><ul>
+          <li>Tier-baseret prisgennemgang</li>
+          <li>Auto-foreslåede salgspriser</li>
+          <li>Kommerciel afrunding</li>
+          <li>Bulk godkend/afvis</li>
+          <li>Dismissal log med begrundelse</li>
+        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t7">Priser</span></div></div>
+      </div>
+
+    </div>
+    <div style="margin-top:8px;font-size:8px;color:#555">Datakilder: PF Concept · Midocean · Xindao · ID · New Wave · Texet · Neutral · Storm Textil — ugentlig sync via REST API</div>
+  </div>
+
+  <!-- ZONE: Websites & Tools -->
+  <div class="zone" style="background:rgba(79,109,245,.04)">
+    <div class="zone-hdr"><h3 style="color:#3b5ce4">Websites & Tools</h3><span class="sub">Marketing sites, plugins, medieproduktion</span></div>
+    <div class="cards cards-5">
+
+      <div class="c" data-cat="prod">
+        <div class="c-h"><div class="c-ico" style="background:rgba(79,109,245,.1);color:#4f6df5">🌐</div>
+          <div><div class="c-t">Group Website</div><div class="c-s">Next.js 15 · :3008</div></div></div>
+        <div class="c-b"><ul><li>Moderselskab</li><li>Alle datterselskaber</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div></div>
+      </div>
+
+      <div class="c" data-cat="prod">
+        <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">⚽</div>
+          <div><div class="c-t">Sport Website</div><div class="c-s">Next.js 14 · :3002</div></div></div>
+        <div class="c-b"><ul><li>b2bsport.dk</li><li>DA / EN / DE</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div></div>
+      </div>
+
+      <div class="c" data-cat="prod">
+        <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">📧</div>
+          <div><div class="c-t">Outlook Plugin</div><div class="c-s">Office Add-in</div></div></div>
+        <div class="c-b"><ul><li>Promotion i Outlook</li><li>Desktop + Web</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div></div>
+      </div>
+
+      <div class="c" data-cat="prod">
+        <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">📺</div>
+          <div><div class="c-t">LED Banners</div><div class="c-s">Bash/ffmpeg</div></div></div>
+        <div class="c-b"><ul><li>Team Esbjerg</li><li>TMS Ringsted</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div></div>
+      </div>
+
+      <div class="c" data-cat="prod">
+        <div class="c-h"><div class="c-ico" style="background:rgba(239,68,68,.1);color:#ef4444">🗃️</div>
+          <div><div class="c-t">Legacy Webshop</div><div class="c-s">nopCommerce · .NET</div></div></div>
+        <div class="c-b"><ul><li>Erstattes af ny webshop</li><li>DB bruges stadig</li></ul><div style="margin-top:3px"><span class="tg t3">Legacy</span></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ZONE: Integrationer -->
+  <div class="zone" style="background:rgba(14,165,233,.04)">
+    <div class="zone-hdr"><h3 style="color:#0284c7">Aktive Integrationer</h3></div>
+    <div class="cards cards-6">
+      <div class="c-sm"><span class="ic">💳</span><div><div class="nm">Bambora</div><div class="ds">Betalinger</div></div></div>
+      <div class="c-sm"><span class="ic">📒</span><div><div class="nm">e-conomic</div><div class="ds">Regnskab</div></div></div>
+      <div class="c-sm"><span class="ic">☁️</span><div><div class="nm">Azure Blob</div><div class="ds">Order logs</div></div></div>
+      <div class="c-sm"><span class="ic">🔧</span><div><div class="nm">Azure DevOps</div><div class="ds">CI/CD</div></div></div>
+      <div class="c-sm"><span class="ic">🐛</span><div><div class="nm">Sentry</div><div class="ds">Errors</div></div></div>
+      <div class="c-sm"><span class="ic">💬</span><div><div class="nm">Discord</div><div class="ds">Alerts</div></div></div>
+    </div>
+  </div>
+
+  <!-- ZONE: Infrastruktur -->
+  <div class="zone" style="background:rgba(79,109,245,.04)">
+    <div class="zone-hdr"><h3 style="color:#3b5ce4">Infrastruktur</h3></div>
+    <div class="cards cards-3">
+      <div class="c-sm"><span class="ic">🖥️</span><div><div class="nm">Windows Server / IIS</div><div class="ds">Self-hosted · Alle apps kører her</div></div></div>
+      <div class="c-sm"><span class="ic">🗃️</span><div><div class="nm">SQL Server</div><div class="ds">Dual DB: v2 + nopCommerce legacy</div></div></div>
+      <div class="c-sm"><span class="ic">🔢</span><div><div class="nm">Porte: 3000 · 3002 · 3003 · 3008 · 3009</div><div class="ds">Service endpoints</div></div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════ DIVIDER ════════════ -->
+<div class="col-div"></div>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!--  RIGHT COLUMN: FREMTID — PLANER & ROADMAP          -->
+<!-- ════════════════════════════════════════════════════ -->
+<div class="col col-future">
+
+  <div class="col-hdr">
+    <h2 style="color:#b45309">◆ Fremtid — Planer & Roadmap</h2>
+    <span class="pill t2">2026 ROADMAP</span>
+  </div>
+
+  <!-- ZONE: Under Udvikling -->
+  <div class="zone" style="background:rgba(217,119,6,.04)">
+    <div class="zone-hdr"><h3 style="color:#b45309">Under Aktiv Udvikling</h3><span class="sub">I gang nu — snart live</span></div>
+    <div class="cards cards-4">
+
+      <div class="c" data-cat="dev">
+        <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">🛍️</div>
+          <div><div class="c-t">Ny Promotion Webshop</div><div class="c-s">Next.js 15.5 · :3000</div></div></div>
+        <div class="c-b"><ul>
+          <li>Minimal friktion checkout</li>
+          <li>Visuelle print-placeringer</li>
+          <li>Konfigurator: farve→antal→deko</li>
+          <li>Multi-language (DA/EN/SE)</li>
+          <li>Erstatter nopCommerce</li>
+        </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span></div></div>
+      </div>
+
+      <div class="c" data-cat="dev">
+        <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">🏟️</div>
+          <div><div class="c-t">Sport Platform</div><div class="c-s">Next.js 15.3 · Prisma · i18n</div></div></div>
+        <div class="c-b"><ul>
+          <li>Admin/management for Sport</li>
+          <li>Kanban-baseret ordrestyring</li>
+          <li>25+ klub-platforme</li>
+          <li>Robusthed & fejlhåndtering</li>
+        </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span></div></div>
+      </div>
+
+      <div class="c" data-cat="dev">
+        <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">📡</div>
+          <div><div class="c-t">Oppetids-monitorering</div><div class="c-s">Health checks · Alerting</div></div></div>
+        <div class="c-b"><ul>
+          <li>PRD eksisterer (connection leak)</li>
+          <li>Alle services overvåget</li>
+          <li>Alerting ved nedetid</li>
+        </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span></div></div>
+      </div>
+
+      <div class="c" data-cat="dev">
+        <div class="c-h"><div class="c-ico" style="background:rgba(168,85,247,.1);color:#a855f7">🤖</div>
+          <div><div class="c-t">AI & Automatisering</div><div class="c-s">Cowork · Ralph · Claude</div></div></div>
+        <div class="c-b"><ul>
+          <li>Roadmap via Cowork</li>
+          <li>Ralph PRD-agent loop</li>
+          <li>AI samhandelsaftaler</li>
+          <li>AI-tekster til sportsplaner</li>
+        </ul><div style="margin-top:3px"><span class="tg t5">AI</span><span class="tg t1">Aktiv</span></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ZONE: Strategiske Planer -->
+  <div class="zone" style="background:rgba(124,58,237,.04)">
+    <div class="zone-hdr"><h3 style="color:#6d28d9">Strategiske Planer</h3><span class="sub">4 faser — Q1 til Q4 2026</span></div>
+
+    <div class="phases">
+      <div class="ph" style="background:#4f6df5">Fase 1 — API Sanitering <small>Q1-Q2</small></div>
+      <div class="ph" style="background:#7c3aed">Fase 2 — Master Modernisering <small>Q2-Q3</small></div>
+      <div class="ph" style="background:#0284c7">Fase 3 — Data Center <small>Q2-Q4</small></div>
+      <div class="ph" style="background:#059669">Fase 4 — Sport Robusthed <small>Q3-Q4</small></div>
+    </div>
+
+    <div class="cards cards-4">
+
+      <div class="c" data-cat="plan">
+        <div class="c-h"><div class="c-ico" style="background:rgba(79,109,245,.1);color:#4f6df5">🔧</div>
+          <div><div class="c-t">API Sanitering</div><div class="c-s">Promotion + Master API</div></div></div>
+        <div class="c-b"><ul>
+          <li>Connection leak fix</li>
+          <li>Customer CRUD endpoints</li>
+          <li>Telefon-søgning i API</li>
+          <li>Rate limiting & auth</li>
+          <li>Fjern hardcoded IPs</li>
+        </ul><div style="margin-top:3px"><span class="tg t3">Høj prioritet</span></div></div>
+      </div>
+
+      <div class="c" data-cat="plan">
+        <div class="c-h"><div class="c-ico" style="background:rgba(139,92,246,.1);color:#8b5cf6">⚡</div>
+          <div><div class="c-t">Master Modernisering</div><div class="c-s">Razor Pages → API-first</div></div></div>
+        <div class="c-b"><ul>
+          <li>POST/PUT/DELETE customers</li>
+          <li>Product API (til Fanshop)</li>
+          <li>Fix EcconmicsId typo</li>
+          <li>Rigtig udviklings-database</li>
+          <li>Economics modernisering</li>
+        </ul><div style="margin-top:3px"><span class="tg t8">Modernisering</span></div></div>
+      </div>
+
+      <div class="c" data-cat="plan">
+        <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">📊</div>
+          <div><div class="c-t">Data Center Udvidelse</div><div class="c-s">Validering · Alarmer · Lager</div></div></div>
+        <div class="c-b"><ul>
+          <li>Kobling til rigtige leverandør-API'er</li>
+          <li>Product validation forbedring</li>
+          <li>Varelagerstyring</li>
+          <li>Master data governance</li>
+        </ul><div style="margin-top:3px"><span class="tg t7">Data</span><span class="tg t3">Planlagt</span></div></div>
+      </div>
+
+      <div class="c" data-cat="plan">
+        <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">🏋️</div>
+          <div><div class="c-t">Sport Robusthed</div><div class="c-s">Stabilitet + features</div></div></div>
+        <div class="c-b"><ul>
+          <li>Kanban validering</li>
+          <li>Multi-klub katalog-sync</li>
+          <li>Performance optimering</li>
+          <li>Admin adgang REHH</li>
+        </ul><div style="margin-top:3px"><span class="tg t1">Sport</span><span class="tg t3">Planlagt</span></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ZONE: Kunder & Demos + Nye Produkter -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+
+    <div class="zone" style="background:rgba(219,39,119,.04)">
+      <div class="zone-hdr"><h3 style="color:#be185d">Kunder & Demos</h3></div>
+      <div class="cards cards-2">
+        <div class="c" data-cat="client">
+          <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🏅</div>
+            <div><div class="c-t">REHH</div><div class="c-s">Tøjsponsor + Fanshop</div></div></div>
+          <div class="c-b"><ul><li>Admin adgang</li><li>Fanshop kobling</li></ul><span class="tg t6">Kunde</span><span class="tg t2">I gang</span></div>
+        </div>
+        <div class="c" data-cat="client">
+          <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🎯</div>
+            <div><div class="c-t">HIF + Bytoften</div><div class="c-s">Demo — logo modtaget</div></div></div>
+          <div class="c-b"><ul><li>Demo-build</li><li>Sport showcase</li></ul><span class="tg t6">Demo</span><span class="tg t3">Planlagt</span></div>
+        </div>
+        <div class="c" data-cat="client">
+          <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">👔</div>
+            <div><div class="c-t">Holger Danske</div><div class="c-s">Genbestilling tøj</div></div></div>
+          <div class="c-b"><ul><li>Faktura: tryk + tøj</li></ul><span class="tg t6">Kunde</span></div>
+        </div>
+        <div class="c" data-cat="client">
+          <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🏛️</div>
+            <div><div class="c-t">Det Faglige Hus</div><div class="c-s">Møde snart</div></div></div>
+          <div class="c-b"><span class="tg t6">Prospekt</span></div>
+        </div>
+        <div class="c" data-cat="client" style="grid-column:span 2">
+          <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🔍</div>
+            <div><div class="c-t">Analyse IT — Ole</div><div class="c-s">IT-overblik for aftale-lukning</div></div></div>
+          <div class="c-b"><span class="tg t6">Prospekt</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="zone" style="background:rgba(139,92,246,.04)">
+      <div class="zone-hdr"><h3 style="color:#7c3aed">Nye Produkter</h3><span class="sub">Helt nye koncepter</span></div>
+      <div class="cards cards-2">
+        <div class="c" data-cat="new" style="grid-column:span 2">
+          <div class="c-h"><div class="c-ico" style="background:rgba(168,85,247,.1);color:#a855f7">🎁</div>
+            <div><div class="c-t">My Special Gift / Gaveshop</div><div class="c-s">Personaliserede firmajulegaver</div></div></div>
+          <div class="c-b"><ul>
+            <li>QR-kode baseret gave-vælger</li>
+            <li>Juletræ-pilot (80 enheder)</li>
+            <li>Per-virksomhed personalisering</li>
+            <li>Tracking af indløsning</li>
+          </ul><div style="margin-top:3px"><span class="tg t5">Nyt koncept</span><span class="tg t3">Planlagt</span></div></div>
+        </div>
+        <div class="c" data-cat="new">
+          <div class="c-h"><div class="c-ico" style="background:rgba(168,85,247,.1);color:#a855f7">🎨</div>
+            <div><div class="c-t">Logo Editor</div><div class="c-s">Spreadshirt-model</div></div></div>
+          <div class="c-b"><ul><li>Templates & inspiration</li><li>"Udefra ind" design</li></ul><span class="tg t5">Nyt koncept</span></div>
+        </div>
+        <div class="c" data-cat="new">
+          <div class="c-h"><div class="c-ico" style="background:rgba(168,85,247,.1);color:#a855f7">🖨️</div>
+            <div><div class="c-t">Mercoprint</div><div class="c-s">Logo + hjemmeside</div></div></div>
+          <div class="c-b"><ul><li>Nyt logo design</li><li>Ny hjemmeside</li></ul><span class="tg t3">Planlagt</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ZONE: Backlog -->
+  <div class="zone" style="background:rgba(220,38,38,.04)">
+    <div class="zone-hdr"><h3 style="color:#dc2626">Backlog — Opgaver & Features</h3><span class="sub">Prioriteret liste</span></div>
+    <div class="cards cards-auto">
+
+      <div class="c" data-cat="task">
+        <div class="c-h"><div class="c-ico" style="background:rgba(239,68,68,.1);color:#ef4444">📦</div>
+          <div><div class="c-t">Archive Features</div><div class="c-s">Upload & faktura</div></div></div>
+        <div class="c-b"><ul><li>Trykprøve upload</li><li>Gem salgsfaktura</li><li>Genbestilling tøj</li></ul><span class="tg t3">Feature</span></div>
+      </div>
+
+      <div class="c" data-cat="task">
+        <div class="c-h"><div class="c-ico" style="background:rgba(139,92,246,.1);color:#8b5cf6">⏱️</div>
+          <div><div class="c-t">Tidsregistrering</div><div class="c-s">HR · Vagter · Pauser</div></div></div>
+        <div class="c-b"><ul><li>Start/slut registrering</li><li>Pause i lønflow</li><li>Eksport til bogholderi</li></ul><span class="tg t3">Feature</span><span class="tg t8">HR</span></div>
+      </div>
+
+      <div class="c" data-cat="task">
+        <div class="c-h"><div class="c-ico" style="background:rgba(239,68,68,.1);color:#ef4444">🎨</div>
+          <div><div class="c-t">Bannerkonfigurator</div><div class="c-s">CMS + responsivt</div></div></div>
+        <div class="c-b"><ul><li>Konfigurator til site</li><li>CMS etablering</li><li>Tablet + telefon</li></ul><span class="tg t3">Feature</span></div>
+      </div>
+
+      <div class="c" data-cat="task">
+        <div class="c-h"><div class="c-ico" style="background:rgba(239,68,68,.1);color:#ef4444">📦</div>
+          <div><div class="c-t">Varelagerstyring</div><div class="c-s">Stock & production</div></div></div>
+        <div class="c-b"><ul><li>Indkøb & produktion</li><li>Lagerstyring</li><li>→ Data Center</li></ul><span class="tg t3">Planlagt</span></div>
+      </div>
+
+      <div class="c" data-cat="task">
+        <div class="c-h"><div class="c-ico" style="background:rgba(239,68,68,.1);color:#ef4444">🖥️</div>
+          <div><div class="c-t">Kontor-dashboards</div><div class="c-s">Info-displays</div></div></div>
+        <div class="c-b"><ul><li>KPI real-time</li><li>Oppetid</li><li>Pipeline</li></ul><span class="tg t3">Planlagt</span></div>
+      </div>
+
+      <div class="c" data-cat="task">
+        <div class="c-h"><div class="c-ico" style="background:rgba(239,68,68,.1);color:#ef4444">🎫</div>
+          <div><div class="c-t">Ticketsystem</div><div class="c-s">Intern support</div></div></div>
+        <div class="c-b"><ul><li>Fejlrapportering</li><li>SLA tracking</li></ul><span class="tg t3">Planlagt</span></div>
+      </div>
+
+      <div class="c" data-cat="task">
+        <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">🔌</div>
+          <div><div class="c-t">Nye Integrationer</div><div class="c-s">Cookie · Chat · Mail</div></div></div>
+        <div class="c-b"><ul><li>Cookie-samtykke</li><li>LiveChat</li><li>MailChimp</li></ul><span class="tg t3">Planlagt</span><span class="tg t7">Int.</span></div>
+      </div>
+
+      <div class="c" data-cat="task">
+        <div class="c-h"><div class="c-ico" style="background:rgba(168,85,247,.1);color:#a855f7">📞</div>
+          <div><div class="c-t">Opkald som Request</div><div class="c-s">Dashboard feature</div></div></div>
+        <div class="c-b"><ul><li>Opkald-knap</li><li>Registrér som request</li></ul><span class="tg t3">Feature</span></div>
+      </div>
+
+      <div class="c" data-cat="task">
+        <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">🔐</div>
+          <div><div class="c-t">Team Tooling</div><div class="c-s">1Password · SEO · AI</div></div></div>
+        <div class="c-b"><ul><li>1Password deling</li><li>SEO med AI</li><li>Louise: AI-tekster</li></ul><span class="tg t3">Intern</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ZONE: Teknisk Gæld -->
+  <div class="zone" style="background:rgba(239,68,68,.04);border-color:rgba(239,68,68,.12)">
+    <div class="zone-hdr"><h3 style="color:#dc2626">⚠️ Teknisk Gæld</h3><span class="sub">Kendte gaps der blokerer modernisering</span></div>
+    <div class="cards cards-3">
+      <div class="c-sm" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">Customer API stubs</div><div class="ds">POST/PUT/DELETE ikke implementeret</div></div></div>
+      <div class="c-sm" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">EcconmicsId typo</div><div class="ds">Kræver DB migration</div></div></div>
+      <div class="c-sm" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">Hardcoded IPs</div><div class="ds">89.188.72.120 i kode</div></div></div>
+      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Ingen telefon-søgning</div><div class="ds">Customer API mangler</div></div></div>
+      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">MasterCustomerType</div><div class="ds">Ikke seeded i DB</div></div></div>
+      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Mock-data i dev</div><div class="ds">Bør have rigtig dev-DB</div></div></div>
+      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Fanshop produkter</div><div class="ds">Hardcoded per klub</div></div></div>
+      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Legacy dual-DB</div><div class="ds">nopCommerce afhængighed</div></div></div>
+      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">OpenAI API-nøgle</div><div class="ds">Ikke konfigureret i Data Center</div></div></div>
+    </div>
+  </div>
+
+</div>
+
+</div><!-- /board -->
+</div><!-- /cv -->
+</div><!-- /wrap -->
+
+<div id="leg">
+  <h4>Status</h4>
+  <div class="li"><div class="lc" style="background:#34d399"></div> Live</div>
+  <div class="li"><div class="lc" style="background:#f59e0b"></div> Under udvikling</div>
+  <div class="li"><div class="lc" style="background:#ef4444"></div> Planlagt</div>
+  <div class="li"><div class="lc" style="background:#a855f7"></div> Nyt koncept</div>
+  <div class="li"><div class="lc" style="background:#ec4899"></div> Kunde</div>
+  <div class="li"><div class="lc" style="background:#06b6d4"></div> Data/Integration</div>
+</div>
+
+<div id="mm"></div>
+
+<script>
+const W=document.getElementById('wrap'),C=document.getElementById('cv');
+let s=.42,px=0,py=0,dr=false,sx,sy;
+function upd(){C.style.transform=`translate(${px}px,${py}px) scale(${s})`;document.getElementById('zl').textContent=Math.round(s*100)+'%';}
+W.addEventListener('mousedown',e=>{if(e.button!==0)return;dr=true;sx=e.clientX-px;sy=e.clientY-py;W.classList.add('g');});
+window.addEventListener('mousemove',e=>{if(!dr)return;px=e.clientX-sx;py=e.clientY-sy;upd();});
+window.addEventListener('mouseup',()=>{dr=false;W.classList.remove('g');});
+W.addEventListener('wheel',e=>{e.preventDefault();const r=W.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top,p=s;s=Math.max(.06,Math.min(3,s*(e.deltaY>0?.9:1.1)));px=mx-(mx-px)*(s/p);py=my-(my-py)*(s/p);upd();},{passive:false});
+let ld=0;
+W.addEventListener('touchstart',e=>{if(e.touches.length===1){dr=true;sx=e.touches[0].clientX-px;sy=e.touches[0].clientY-py;}else if(e.touches.length===2){dr=false;ld=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}},{passive:false});
+W.addEventListener('touchmove',e=>{e.preventDefault();if(e.touches.length===1&&dr){px=e.touches[0].clientX-sx;py=e.touches[0].clientY-sy;upd();}else if(e.touches.length===2){const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY),cx=(e.touches[0].clientX+e.touches[1].clientX)/2,cy=(e.touches[0].clientY+e.touches[1].clientY)/2,p=s;s=Math.max(.06,Math.min(3,s*(d/ld)));px=cx-(cx-px)*(s/p);py=cy-(cy-py)*(s/p);ld=d;upd();}},{passive:false});
+W.addEventListener('touchend',()=>{dr=false;});
+function zTo(v){s=v;px=0;py=0;upd();}
+function rV(){s=.42;px=0;py=0;upd();}
+function doS(q){q=q.toLowerCase().trim();document.querySelectorAll('.c,.c-sm').forEach(c=>{if(!q){c.style.opacity='1';c.style.borderColor='';c.style.boxShadow='';return;}const m=c.textContent.toLowerCase().includes(q);c.style.opacity=m?'1':'.07';c.style.borderColor=m?'rgba(79,109,245,.5)':'';c.style.boxShadow=m?'0 0 12px rgba(79,109,245,.1)':'';});}
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.key==='f'||e.key==='F'){document.getElementById('qs').focus();e.preventDefault();}if(e.key==='Escape'){document.getElementById('qs').value='';doS('');document.getElementById('qs').blur();}if(e.key==='1')zTo(.22);if(e.key==='2')zTo(.42);if(e.key==='3')zTo(.7);if(e.key==='4')zTo(1);if(e.key==='r'||e.key==='R')rV();});
+upd();
+</script>
+</body>
+</html>
