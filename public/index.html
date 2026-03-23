@@ -208,11 +208,11 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   </div>
 
   <!-- ZONE: Core Systemer -->
-  <div class="zone" style="background:rgba(16,185,129,.04)">
+  <div class="zone" data-zone="core-systems" style="background:rgba(16,185,129,.04)">
     <div class="zone-hdr"><h3 style="color:#059669">Core Systemer</h3><span class="sub">Kører i produktion lige nu</span></div>
     <div class="cards cards-4">
 
-      <div class="c" data-cat="prod" data-id="master-api" data-expand="1" data-links="master-mod,api-san,promotion-api">
+      <div class="c" data-cat="prod" data-id="master-api" data-expand="1" data-links="master-mod,api-san,promotion-api" data-status="live" data-tech=".net,razor-pages,ef-core">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">🗄️</div>
           <div><div class="c-t">Master API</div><div class="c-s">.NET · Razor Pages · EF Core</div></div></div>
         <div class="c-b"><ul>
@@ -229,7 +229,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 <h5>Acceptkriterier</h5><ul class="ac-list"><li>GET /customers returnerer pagineret liste</li><li>POST /orders opretter ordre i Master + e-conomic</li><li>Proff API CVR-opslag returnerer firmaoplysninger</li></ul></div>
       </div>
 
-      <div class="c" data-cat="prod" data-id="crm-dashboard" data-expand="1" data-links="crm-api-docs,tidsreg,sport-admin">
+      <div class="c" data-cat="prod" data-id="crm-dashboard" data-expand="1" data-links="crm-api-docs,tidsreg,sport-admin" data-status="live" data-tech="nextjs,zustand,dnd-kit">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">📈</div>
           <div><div class="c-t">B2B Group Dashboard</div><div class="c-s">Next.js 15.3 · zustand · dnd-kit · :3003</div></div></div>
         <div class="c-b"><ul>
@@ -248,7 +248,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 <h5>Acceptkriterier</h5><ul class="ac-list"><li>Salgspipeline viser alle aktive requests</li><li>HR vagtplan tillader drag-and-drop</li><li>Finance-modul syncer med e-conomic</li><li>Sentry fejlrate under 5/uge</li></ul></div>
       </div>
 
-      <div class="c" data-id="promotion-api" data-expand="1" data-links="ny-webshop,api-san,legacy-webshop" data-cat="prod">
+      <div class="c" data-id="promotion-api" data-expand="1" data-links="ny-webshop,api-san,legacy-webshop" data-cat="prod" data-status="live" data-tech=".net10,dual-db,swagger">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">🔌</div>
           <div><div class="c-t">Promotion API</div><div class="c-s">.NET 10 · Dual DB · Swagger</div></div></div>
         <div class="c-b"><ul>
@@ -264,7 +264,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 <h5>Acceptkriterier</h5><ul class="ac-list"><li>GET /api/v1/Customers?phone=X returnerer match</li><li>POST /api/v1/Customers opretter med duplicate-check</li><li>Swagger dokumentation komplet for alle endpoints</li><li>Ingen hardcoded IPs i kodebasen</li></ul></div>
       </div>
 
-      <div class="c" data-id="fanshop" data-expand="1" data-links="promotion-api,sport-web,sport-admin" data-cat="prod">
+      <div class="c" data-id="fanshop" data-expand="1" data-links="promotion-api,sport-web,sport-admin" data-cat="prod" data-status="live" data-tech="nextjs,bambora,mobilepay">
         <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🛒</div>
           <div><div class="c-t">RHK Fanshop</div><div class="c-s">Next.js 15.5 · Zod · zustand · :3009</div></div></div>
         <div class="c-b"><ul>
@@ -287,11 +287,11 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   </div>
 
   <!-- ZONE: Data Control Center -->
-  <div class="zone" style="background:rgba(14,165,233,.04)">
+  <div class="zone" data-zone="data-control" style="background:rgba(14,165,233,.04)">
     <div class="zone-hdr"><h3 style="color:#0284c7">Data Control Center</h3><span class="sub">Datakontrol-modul — ugentlig leverandørdata-rutine</span></div>
     <div class="cards cards-3">
 
-      <div class="c" data-id="advarsels-dash" data-links="data-center,prisstyring" data-cat="prod">
+      <div class="c" data-id="advarsels-dash" data-links="data-center,prisstyring" data-cat="prod" data-status="live">
         <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">🔔</div>
           <div><div class="c-t">Advarselsdashboard</div><div class="c-s">7 alert-kategorier · Filtrering</div></div></div>
         <div class="c-b"><ul>
@@ -303,7 +303,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t7">Data</span></div></div>
       </div>
 
-      <div class="c" data-id="mapping-wizard" data-links="data-center,advarsels-dash" data-expand="1" data-cat="prod">
+      <div class="c" data-id="mapping-wizard" data-links="data-center,advarsels-dash" data-expand="1" data-cat="prod" data-status="live" data-needs="dropdown-produkttyper;ai-materiale-mapping;giving-2.0-validering">
         <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">🗺️</div>
           <div><div class="c-t">Produktmapping Wizard</div><div class="c-s">4-trins guide · AI-oversættelse</div></div></div>
         <div class="c-b"><ul>
@@ -320,7 +320,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 <h5>Næste skridt</h5><ul class="ac-list"><li>Implementér dropdown-baserede produkttyper (Master Data)</li><li>AI-assisteret materiale-mapping i Dashboard</li><li>Validering af Giving 2.0-produkter (Louise)</li><li>Opdatering af long descriptions og materialer</li></ul></div>
       </div>
 
-      <div class="c" data-id="prisstyring" data-links="advarsels-dash,mapping-wizard" data-cat="prod">
+      <div class="c" data-id="prisstyring" data-links="advarsels-dash,mapping-wizard" data-cat="prod" data-status="live">
         <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">💰</div>
           <div><div class="c-t">Prisstyring</div><div class="c-s">6 tier-niveauer · Markup-beregning</div></div></div>
         <div class="c-b"><ul>
@@ -337,18 +337,18 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   </div>
 
   <!-- ZONE: Websites & Tools -->
-  <div class="zone" style="background:rgba(79,109,245,.04)">
+  <div class="zone" data-zone="websites-tools" style="background:rgba(79,109,245,.04)">
     <div class="zone-hdr"><h3 style="color:#3b5ce4">Websites & Tools</h3><span class="sub">Marketing sites, plugins, medieproduktion</span></div>
     <div class="cards cards-5">
 
-      <div class="c" data-id="group-web" data-cat="prod">
+      <div class="c" data-id="group-web" data-cat="prod" data-status="live">
         <div class="c-h"><div class="c-ico" style="background:rgba(79,109,245,.1);color:#4f6df5">🌐</div>
           <div><div class="c-t">Group Website</div><div class="c-s">Next.js 15.5 · i18n · :3008</div></div></div>
         <div class="c-b"><ul><li>Moderselskab profil</li><li>Google Maps integration</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div>
         <a class="c-repo" href="https://github.com/teltploek/b2bgroup" target="_blank">b2bgroup · 13 commits</a></div>
       </div>
 
-      <div class="c" data-id="sport-web" data-links="sport-admin,fanshop,b2bsport-repo" data-cat="prod">
+      <div class="c" data-id="sport-web" data-links="sport-admin,fanshop,b2bsport-repo" data-cat="prod" data-status="live" data-tech="nextjs,xy-flow">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">⚽</div>
           <div><div class="c-t">Sport Website</div><div class="c-s">Next.js 14 · XY Flow · :3002</div></div></div>
         <div class="c-b"><ul><li>b2bsport.dk — mest aktive repo</li><li>DA / EN · workflow redesign</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div>
@@ -356,19 +356,19 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         <div class="act-bar"><div class="act-fill" style="width:100%;background:#34d399"></div></div></div>
       </div>
 
-      <div class="c" data-id="outlook-plugin" data-cat="prod">
+      <div class="c" data-id="outlook-plugin" data-cat="prod" data-status="live">
         <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">📧</div>
           <div><div class="c-t">Outlook Plugin</div><div class="c-s">Office Add-in</div></div></div>
         <div class="c-b"><ul><li>Promotion i Outlook</li><li>Desktop + Web</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div></div>
       </div>
 
-      <div class="c" data-id="led-banners" data-cat="prod">
+      <div class="c" data-id="led-banners" data-cat="prod" data-status="live">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">📺</div>
           <div><div class="c-t">LED Banners</div><div class="c-s">Bash/ffmpeg</div></div></div>
         <div class="c-b"><ul><li>Team Esbjerg</li><li>TMS Ringsted</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div></div>
       </div>
 
-      <div class="c" data-id="legacy-webshop" data-links="ny-webshop,promotion-api" data-cat="prod">
+      <div class="c" data-id="legacy-webshop" data-links="ny-webshop,promotion-api" data-cat="prod" data-status="legacy">
         <div class="c-h"><div class="c-ico" style="background:rgba(239,68,68,.1);color:#ef4444">🗃️</div>
           <div><div class="c-t">Legacy Webshop</div><div class="c-s">nopCommerce · .NET</div></div></div>
         <div class="c-b"><ul><li>Erstattes af Ny Promotion Webshop</li><li>DB bruges stadig af Promotion API</li></ul><div style="margin-top:3px"><span class="tg t3">Legacy</span></div></div>
@@ -378,7 +378,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   </div>
 
   <!-- ZONE: Integrationer -->
-  <div class="zone" style="background:rgba(14,165,233,.04)">
+  <div class="zone" data-zone="integrations" style="background:rgba(14,165,233,.04)">
     <div class="zone-hdr"><h3 style="color:#0284c7">Aktive Integrationer</h3></div>
     <div class="cards cards-6">
       <div class="c-sm"><span class="ic">💳</span><div><div class="nm">Bambora</div><div class="ds">Betalinger</div></div></div>
@@ -395,7 +395,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   </div>
 
   <!-- ZONE: Infrastruktur -->
-  <div class="zone" style="background:rgba(79,109,245,.04)">
+  <div class="zone" data-zone="infrastructure" style="background:rgba(79,109,245,.04)">
     <div class="zone-hdr"><h3 style="color:#3b5ce4">Infrastruktur</h3></div>
     <div class="cards cards-3">
       <div class="c-sm"><span class="ic">🖥️</span><div><div class="nm">Windows Server / NSSM</div><div class="ds">Self-hosted · C:\B2BGroupApplications\</div></div></div>
@@ -405,7 +405,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   </div>
 
   <!-- ZONE: Source Code & Repos -->
-  <div class="zone" style="background:rgba(30,30,30,.03)">
+  <div class="zone" data-zone="source-code" style="background:rgba(30,30,30,.03)">
     <div class="zone-hdr"><h3 style="color:#333">Source Code — GitHub Repos</h3><span class="sub">github.com/teltploek · TypeScript + Next.js</span></div>
     <div class="repo-grid">
 
@@ -513,11 +513,11 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   </div>
 
   <!-- ZONE: Under Udvikling -->
-  <div class="zone" style="background:rgba(217,119,6,.04)">
+  <div class="zone" data-zone="active-dev" style="background:rgba(217,119,6,.04)">
     <div class="zone-hdr"><h3 style="color:#b45309">Under Aktiv Udvikling</h3><span class="sub">I gang nu — snart live</span></div>
     <div class="cards cards-4">
 
-      <div class="c" data-id="ny-webshop" data-expand="1" data-links="promotion-api,legacy-webshop,master-api" data-cat="dev">
+      <div class="c" data-id="ny-webshop" data-expand="1" data-links="promotion-api,legacy-webshop,master-api" data-cat="dev" data-status="dev" data-tech="nextjs">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">🛍️</div>
           <div><div class="c-t">Ny Promotion Webshop</div><div class="c-s">Next.js 15.5 · :3000</div></div></div>
         <div class="c-b"><ul>
@@ -535,7 +535,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 <h5>Acceptkriterier</h5><ul class="ac-list"><li>Checkout-flow under 3 klik</li><li>Print-placering visuelt konfigurerbar</li><li>API 3.0 integration med Toppoint produkter</li><li>Responsiv på mobil og tablet</li></ul></div>
       </div>
 
-      <div class="c" data-id="sport-admin" data-expand="1" data-links="sport-web,crm-dashboard,fanshop" data-cat="dev">
+      <div class="c" data-id="sport-admin" data-expand="1" data-links="sport-web,crm-dashboard,fanshop" data-cat="dev" data-status="dev" data-tech="nextjs,xy-flow">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">🏟️</div>
           <div><div class="c-t">Sport Admin Platform</div><div class="c-s">Next.js 15.3 · @tailwindcss/forms</div></div></div>
         <div class="c-b"><ul>
@@ -553,7 +553,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 <h5>Acceptkriterier</h5><ul class="ac-list"><li>Klub-admin kan logge ind og se eget roster</li><li>B2B admin kan se alle klubber</li><li>Kit setup syncer med Fanshop-produkter</li><li>Ordrehistorik tilgængelig per klub</li></ul></div>
       </div>
 
-      <div class="c" data-id="oppetid" data-expand="1" data-cat="dev">
+      <div class="c" data-id="oppetid" data-expand="1" data-cat="dev" data-status="dev">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">📡</div>
           <div><div class="c-t">Oppetids-monitorering</div><div class="c-s">Health checks · Alerting</div></div></div>
         <div class="c-b"><ul>
@@ -569,7 +569,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 <h5>Acceptkriterier</h5><ul class="ac-list"><li>Alle services (port 3000-3009) checkes hvert 5. minut</li><li>Alert sendes inden 2 minutter efter nedetid</li><li>Dashboard viser uptime-historik per service</li><li>Auto-restart via NSSM ved crash</li></ul></div>
       </div>
 
-      <div class="c" data-id="ai-auto" data-expand="1" data-cat="dev">
+      <div class="c" data-id="ai-auto" data-expand="1" data-cat="dev" data-status="dev">
         <div class="c-h"><div class="c-ico" style="background:rgba(168,85,247,.1);color:#a855f7">🤖</div>
           <div><div class="c-t">AI & Automatisering</div><div class="c-s">Cowork · Ralph · Claude</div></div></div>
         <div class="c-b"><ul>
@@ -586,7 +586,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
       </div>
 
 
-      <div class="c" data-id="warehouse-app" data-expand="1" data-cat="dev">
+      <div class="c" data-id="warehouse-app" data-expand="1" data-cat="dev" data-status="dev" data-tech="expo,react-native" data-needs="funktionalitet;master-api-integration;b2b-design">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">📱</div>
           <div><div class="c-t">Warehouse App</div><div class="c-s">Expo · React Native · TestFlight</div></div></div>
         <div class="c-b"><ul>
@@ -606,7 +606,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   </div>
 
   <!-- ZONE: Strategiske Planer -->
-  <div class="zone" style="background:rgba(124,58,237,.04)">
+  <div class="zone" data-zone="strategic-plans" style="background:rgba(124,58,237,.04)">
     <div class="zone-hdr"><h3 style="color:#6d28d9">Strategiske Planer</h3><span class="sub">4 faser — Q1 til Q4 2026</span></div>
 
     <div class="phases">
@@ -618,7 +618,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 
     <div class="cards cards-4">
 
-      <div class="c" data-id="api-san" data-expand="1" data-links="promotion-api,master-api" data-cat="plan">
+      <div class="c" data-id="api-san" data-expand="1" data-links="promotion-api,master-api" data-cat="plan" data-status="planned" data-needs="sanitering;rate-limiting;hardcoded-ips">
         <div class="c-h"><div class="c-ico" style="background:rgba(79,109,245,.1);color:#4f6df5">🔧</div>
           <div><div class="c-t">API Sanitering</div><div class="c-s">Promotion + Master API</div></div></div>
         <div class="c-b"><ul>
@@ -636,7 +636,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 <h5>Acceptkriterier</h5><ul class="ac-list"><li>Ingen connection leaks i 7 dage</li><li>Alle customer endpoints CRUD-komplet</li><li>Rate limiting aktiv (100 req/min)</li><li>Ingen hardcoded IPs i kodebasen</li><li>Auth token validering på alle endpoints</li></ul></div>
       </div>
 
-      <div class="c" data-id="master-mod" data-links="master-api,crm-dashboard" data-cat="plan">
+      <div class="c" data-id="master-mod" data-links="master-api,crm-dashboard" data-cat="plan" data-status="planned">
         <div class="c-h"><div class="c-ico" style="background:rgba(139,92,246,.1);color:#8b5cf6">⚡</div>
           <div><div class="c-t">Master Modernisering</div><div class="c-s">Razor Pages → API-first</div></div></div>
         <div class="c-b"><ul>
@@ -648,7 +648,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t8">Modernisering</span></div></div>
       </div>
 
-      <div class="c" data-id="data-center" data-links="advarsels-dash,mapping-wizard,prisstyring" data-cat="plan">
+      <div class="c" data-id="data-center" data-links="advarsels-dash,mapping-wizard,prisstyring" data-cat="plan" data-status="planned">
         <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">📊</div>
           <div><div class="c-t">Data Center Udvidelse</div><div class="c-s">Validering · Alarmer · Lager</div></div></div>
         <div class="c-b"><ul>
@@ -659,7 +659,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t7">Data</span><span class="tg t3">Planlagt</span></div></div>
       </div>
 
-      <div class="c" data-id="sport-robust" data-links="sport-web,sport-admin" data-cat="plan">
+      <div class="c" data-id="sport-robust" data-links="sport-web,sport-admin" data-cat="plan" data-status="planned">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">🏋️</div>
           <div><div class="c-t">Sport Robusthed</div><div class="c-s">Stabilitet + features</div></div></div>
         <div class="c-b"><ul>
@@ -676,7 +676,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   <!-- ZONE: Kunder & Demos + Nye Produkter -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
 
-    <div class="zone" style="background:rgba(219,39,119,.04)">
+    <div class="zone" data-zone="clients" style="background:rgba(219,39,119,.04)">
       <div class="zone-hdr"><h3 style="color:#be185d">Kunder & Demos</h3></div>
       <div class="cards cards-2">
         <div class="c" data-cat="client">
@@ -696,8 +696,8 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </div>
         <div class="c" data-cat="client">
           <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🏛️</div>
-            <div><div class="c-t">Det Faglige Hus</div><div class="c-s">Møde snart</div></div></div>
-          <div class="c-b"><span class="tg t6">Prospekt</span></div>
+            <div><div class="c-t">Det Faglige Hus</div><div class="c-s">Prospekt · REHH/LED-kontekst</div></div></div>
+          <div class="c-b"><ul><li>Indbudt til møde i nær fremtid</li><li>Forbindelse via REHH (Anette Knudsen)</li><li>LED-sponsorvisninger til håndboldkampe</li></ul><span class="tg t6">Prospekt</span></div>
         </div>
         <div class="c" data-cat="client" style="grid-column:span 2">
           <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🔍</div>
@@ -707,7 +707,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
       </div>
     </div>
 
-    <div class="zone" style="background:rgba(139,92,246,.04)">
+    <div class="zone" data-zone="new-products" style="background:rgba(139,92,246,.04)">
       <div class="zone-hdr"><h3 style="color:#7c3aed">Nye Produkter</h3><span class="sub">Helt nye koncepter</span></div>
       <div class="cards cards-2">
         <div class="c" data-id="gaveshop" data-cat="new" style="grid-column:span 2">
@@ -747,7 +747,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   </div>
 
   <!-- ZONE: Backlog -->
-  <div class="zone" style="background:rgba(220,38,38,.04)">
+  <div class="zone" data-zone="backlog" style="background:rgba(220,38,38,.04)">
     <div class="zone-hdr"><h3 style="color:#dc2626">Backlog — Opgaver & Features</h3><span class="sub">Prioriteret liste</span></div>
     <div class="cards cards-auto">
 
@@ -819,22 +819,22 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   </div>
 
   <!-- ZONE: Teknisk Gæld -->
-  <div class="zone" style="background:rgba(239,68,68,.04);border-color:rgba(239,68,68,.12)">
+  <div class="zone" data-zone="tech-debt" style="background:rgba(239,68,68,.04);border-color:rgba(239,68,68,.12)">
     <div class="zone-hdr"><h3 style="color:#dc2626">⚠️ Teknisk Gæld</h3><span class="sub">Kendte gaps der blokerer modernisering</span></div>
     <div class="cards cards-3">
-      <div class="c-sm" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">Customer API stubs</div><div class="ds">POST/PUT/DELETE ikke implementeret</div></div></div>
-      <div class="c-sm" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">EcconmicsId typo</div><div class="ds">Kræver DB migration</div></div></div>
-      <div class="c-sm" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">Hardcoded IPs</div><div class="ds">89.188.72.120 i kode</div></div></div>
-      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Ingen telefon-søgning</div><div class="ds">Customer API mangler</div></div></div>
-      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">MasterCustomerType</div><div class="ds">Ikke seeded i DB</div></div></div>
-      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Mock-data i dev</div><div class="ds">Bør have rigtig dev-DB</div></div></div>
-      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Fanshop produkter</div><div class="ds">Hardcoded per klub</div></div></div>
-      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Legacy dual-DB</div><div class="ds">nopCommerce afhængighed</div></div></div>
-      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">OpenAI API-nøgle</div><div class="ds">Ikke konfigureret i Data Center</div></div></div>
-      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Fritekst produkttyper</div><div class="ds">Giver inkonsistens (Stearinlys/Sterinlys) — kræver dropdowns via Master Data</div></div></div>
-      <div class="c-sm" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">Virus på B2BSport server</div><div class="ds">Windows Defender trojan — design demo, ikke produktion</div></div></div>
-      <div class="c-sm" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">Server nedetid (gentagen)</div><div class="ds">Node.js lukkes ikke korrekt — root cause analyse i gang</div></div></div>
-      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Azure subscription skiftet</div><div class="ds">Gammel slettet (blob logging tabt) — ny oprettet</div></div></div>
+      <div class="c-sm" data-severity="critical" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">Customer API stubs</div><div class="ds">POST/PUT/DELETE ikke implementeret</div></div></div>
+      <div class="c-sm" data-severity="critical" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">EcconmicsId typo</div><div class="ds">Kræver DB migration</div></div></div>
+      <div class="c-sm" data-severity="critical" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">Hardcoded IPs</div><div class="ds">89.188.72.120 i kode</div></div></div>
+      <div class="c-sm" data-severity="warning" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Ingen telefon-søgning</div><div class="ds">Customer API mangler</div></div></div>
+      <div class="c-sm" data-severity="warning" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">MasterCustomerType</div><div class="ds">Ikke seeded i DB</div></div></div>
+      <div class="c-sm" data-severity="warning" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Mock-data i dev</div><div class="ds">Bør have rigtig dev-DB</div></div></div>
+      <div class="c-sm" data-severity="warning" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Fanshop produkter</div><div class="ds">Hardcoded per klub</div></div></div>
+      <div class="c-sm" data-severity="warning" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Legacy dual-DB</div><div class="ds">nopCommerce afhængighed</div></div></div>
+      <div class="c-sm" data-severity="warning" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">OpenAI API-nøgle</div><div class="ds">Ikke konfigureret i Data Center</div></div></div>
+      <div class="c-sm" data-severity="warning" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Fritekst produkttyper</div><div class="ds">Giver inkonsistens (Stearinlys/Sterinlys) — kræver dropdowns via Master Data</div></div></div>
+      <div class="c-sm" data-severity="critical" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">Virus på B2BSport server</div><div class="ds">Windows Defender trojan — design demo, ikke produktion</div></div></div>
+      <div class="c-sm" data-severity="critical" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">Server nedetid (gentagen)</div><div class="ds">Node.js lukkes ikke korrekt — root cause analyse i gang</div></div></div>
+      <div class="c-sm" data-severity="warning" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Azure subscription skiftet</div><div class="ds">Gammel slettet (blob logging tabt) — ny oprettet</div></div></div>
     </div>
   </div>
 
@@ -978,5 +978,89 @@ document.querySelectorAll('[data-expand]').forEach(card => {
   });
 });
 </script>
+
+<script type="application/ld+json" id="canvas-data">
+{
+  "@context": "https://b2bgroup.dk/canvas",
+  "@type": "DigitalEcosystemCanvas",
+  "version": "2026-03-23",
+  "systems": [
+    {"id": "master-api", "name": "Master API", "zone": "core-systems", "status": "live", "tech": [".NET", "Razor Pages", "EF Core"], "links": ["master-mod", "api-san", "promotion-api"], "repo": null, "needs": [], "description": "Source of truth: Kunder, Ordrer, Produkter. Economics integration, Request/ordre workflow, Proff API."},
+    {"id": "crm-dashboard", "name": "B2B Group Dashboard", "zone": "core-systems", "status": "live", "tech": ["Next.js", "zustand", "dnd-kit"], "links": ["crm-api-docs", "tidsreg", "sport-admin"], "repo": "b2b-crm-dashboard", "needs": [], "description": "Salgspipeline & ordrestyring, HR vagtplan/ferie, Finance & my-activity moduler"},
+    {"id": "promotion-api", "name": "Promotion API", "zone": "core-systems", "status": "live", "tech": [".NET 10", "Dual DB", "Swagger"], "links": ["ny-webshop", "api-san", "legacy-webshop"], "repo": null, "needs": ["sanitering", "rate-limiting", "hardcoded-ips"], "description": "REST API til produkter, kategorier, ordrer. Dual DB (v2 + nopCommerce)."},
+    {"id": "fanshop", "name": "RHK Fanshop", "zone": "core-systems", "status": "live", "tech": ["Next.js", "Bambora", "MobilePay"], "links": ["promotion-api", "sport-web", "sport-admin"], "repo": "b2b-fanshop", "needs": [], "description": "E-commerce platform med personalisering, Bambora/MobilePay betaling"},
+    {"id": "advarsels-dash", "name": "Advarselsdashboard", "zone": "data-control", "status": "live", "tech": [], "links": ["data-center", "prisstyring"], "repo": null, "needs": [], "description": "Alert-kategorier, manglende SKU, kostprisændringer"},
+    {"id": "mapping-wizard", "name": "Produktmapping Wizard", "zone": "data-control", "status": "live", "tech": [], "links": ["data-center", "advarsels-dash"], "repo": null, "needs": ["dropdown-produkttyper", "ai-materiale-mapping", "giving-2.0-validering"], "description": "4-trins guide til leverandørdata-mapping med AI-oversættelse"},
+    {"id": "prisstyring", "name": "Prisstyring", "zone": "data-control", "status": "live", "tech": [], "links": ["advarsels-dash", "mapping-wizard"], "repo": null, "needs": [], "description": "Tier-baseret prisgennemgang, auto-foreslåede salgspriser"},
+    {"id": "group-web", "name": "Group Website", "zone": "websites-tools", "status": "live", "tech": ["Next.js"], "links": [], "repo": "b2bgroup", "needs": [], "description": "Moderselskab profil, Google Maps integration"},
+    {"id": "sport-web", "name": "Sport Website", "zone": "websites-tools", "status": "live", "tech": ["Next.js", "XY Flow"], "links": ["sport-admin", "fanshop"], "repo": "b2bsport", "needs": [], "description": "b2bsport.dk — mest aktive repo, DA/EN workflow redesign"},
+    {"id": "outlook-plugin", "name": "Outlook Plugin", "zone": "websites-tools", "status": "live", "tech": [], "links": [], "repo": null, "needs": [], "description": "Office Add-in til Promotion i Outlook"},
+    {"id": "led-banners", "name": "LED Banners", "zone": "websites-tools", "status": "live", "tech": [], "links": [], "repo": null, "needs": [], "description": "Team Esbjerg, TMS Ringsted"},
+    {"id": "legacy-webshop", "name": "Legacy Webshop", "zone": "websites-tools", "status": "legacy", "tech": ["nopCommerce"], "links": ["ny-webshop", "promotion-api"], "repo": null, "needs": [], "description": "Erstattes af Ny Promotion Webshop, men DB bruges af Promotion API"},
+    {"id": "ny-webshop", "name": "Ny Promotion Webshop", "zone": "active-dev", "status": "dev", "tech": ["Next.js"], "links": ["promotion-api", "legacy-webshop", "master-api"], "repo": null, "needs": [], "description": "Modern webshop med minimal friktion checkout, konfigurator"},
+    {"id": "sport-admin", "name": "Sport Admin Platform", "zone": "active-dev", "status": "dev", "tech": ["Next.js", "XY Flow"], "links": ["sport-web", "crm-dashboard", "fanshop"], "repo": "b2b-sport-admin", "needs": [], "description": "Club mgmt, roster, kit setup, agreements & order tracking"},
+    {"id": "oppetid", "name": "Oppetids-monitorering", "zone": "active-dev", "status": "dev", "tech": [], "links": [], "repo": null, "needs": [], "description": "Health checks og alerting for alle services"},
+    {"id": "ai-auto", "name": "AI & Automatisering", "zone": "active-dev", "status": "dev", "tech": ["Claude", "Ralph"], "links": [], "repo": null, "needs": [], "description": "Cowork til roadmap-styring, Ralph PRD-agent, AI-samhandelsaftaler"},
+    {"id": "warehouse-app", "name": "Warehouse App", "zone": "active-dev", "status": "dev", "tech": ["Expo", "React Native"], "links": [], "repo": null, "needs": ["funktionalitet", "master-api-integration", "b2b-design"], "description": "Lager-app til mobil (iOS) via TestFlight"},
+    {"id": "api-san", "name": "API Sanitering", "zone": "strategic-plans", "status": "planned", "tech": [], "links": ["promotion-api", "master-api"], "repo": null, "needs": ["sanitering", "rate-limiting", "hardcoded-ips"], "description": "Connection leak fix, Customer CRUD, telefon-søgning, rate limiting"},
+    {"id": "master-mod", "name": "Master Modernisering", "zone": "strategic-plans", "status": "planned", "tech": [], "links": ["master-api", "crm-dashboard"], "repo": null, "needs": [], "description": "Razor Pages → API-first, Product API, fix EcconmicsId typo"},
+    {"id": "data-center", "name": "Data Center Udvidelse", "zone": "strategic-plans", "status": "planned", "tech": [], "links": ["advarsels-dash", "mapping-wizard", "prisstyring"], "repo": null, "needs": [], "description": "Validering, alarmer, varelagerstyring, Master data governance"},
+    {"id": "sport-robust", "name": "Sport Robusthed", "zone": "strategic-plans", "status": "planned", "tech": [], "links": ["sport-web", "sport-admin"], "repo": null, "needs": [], "description": "Kanban validering, multi-klub katalog-sync, performance"},
+    {"id": "gaveshop", "name": "My Special Gift / Gaveshop", "zone": "new-products", "status": "concept", "tech": [], "links": [], "repo": null, "needs": [], "description": "Personaliserede firmajulegaver med QR-kode baseret gave-vælger"},
+    {"id": "archive-feat", "name": "Archive Features", "zone": "backlog", "status": "planned", "tech": [], "links": [], "repo": null, "needs": [], "description": "Trykprøve upload, gem salgsfaktura, genbestilling tøj"},
+    {"id": "tidsreg", "name": "Tidsregistrering", "zone": "backlog", "status": "planned", "tech": [], "links": ["crm-dashboard"], "repo": null, "needs": [], "description": "HR tidsregistrering, vagter, pauser, eksport til bogholderi"}
+  ],
+  "techDebt": [
+    {"name": "Customer API stubs", "severity": "critical", "description": "POST/PUT/DELETE ikke implementeret"},
+    {"name": "EcconmicsId typo", "severity": "critical", "description": "Kræver DB migration"},
+    {"name": "Hardcoded IPs", "severity": "critical", "description": "89.188.72.120 i kode"},
+    {"name": "Ingen telefon-søgning", "severity": "warning", "description": "Customer API mangler"},
+    {"name": "MasterCustomerType", "severity": "warning", "description": "Ikke seeded i DB"},
+    {"name": "Mock-data i dev", "severity": "warning", "description": "Bør have rigtig dev-DB"},
+    {"name": "Fanshop produkter", "severity": "warning", "description": "Hardcoded per klub"},
+    {"name": "Legacy dual-DB", "severity": "warning", "description": "nopCommerce afhængighed"},
+    {"name": "OpenAI API-nøgle", "severity": "warning", "description": "Ikke konfigureret i Data Center"},
+    {"name": "Fritekst produkttyper", "severity": "warning", "description": "Inkonsistens - kræver dropdowns"},
+    {"name": "Virus på B2BSport server", "severity": "critical", "description": "Windows Defender trojan - design demo"},
+    {"name": "Server nedetid", "severity": "critical", "description": "Node.js lukkes ikke korrekt"},
+    {"name": "Azure subscription skiftet", "severity": "warning", "description": "Gammel slettet, ny oprettet"}
+  ],
+  "integrations": [
+    {"name": "Bambora", "type": "payment", "icon": "💳"},
+    {"name": "e-conomic", "type": "accounting", "icon": "📒"},
+    {"name": "Azure Blob", "type": "storage", "icon": "☁️"},
+    {"name": "Azure DevOps", "type": "cicd", "icon": "🔧"},
+    {"name": "GitHub", "type": "vcs", "icon": "🐙"},
+    {"name": "Sentry", "type": "monitoring", "icon": "🐛"},
+    {"name": "Discord", "type": "alerts", "icon": "💬"},
+    {"name": "Teams", "type": "notifications", "icon": "📣"},
+    {"name": "Cloudflare", "type": "analytics", "icon": "📊"},
+    {"name": "Apple TestFlight", "type": "distribution", "icon": "🍎"}
+  ],
+  "repos": [
+    {"name": "b2bsport", "desc": "B2B Sport website", "tech": "Next.js 14", "commits": 73, "updated": "Feb 2026"},
+    {"name": "b2b-crm-dashboard", "desc": "CRM + HR + Finance", "tech": "Next.js 15.3", "commits": 16, "updated": "Sep 2025"},
+    {"name": "b2bproductbacklog", "desc": "Product backlog board", "tech": "Next.js 15", "commits": 14, "updated": "Feb 2026"},
+    {"name": "b2bgroup", "desc": "Group website", "tech": "Next.js 15.5", "commits": 13, "updated": "Dec 2025"},
+    {"name": "b2b-fanshop", "desc": "RHK Fanshop", "tech": "Next.js 15.5", "commits": 12, "updated": "Oct 2025"},
+    {"name": "b2b-sport-admin", "desc": "Sport admin portal", "tech": "Next.js 15.3", "commits": 8, "updated": "Mar 2026"}
+  ],
+  "zones": [
+    {"id": "core-systems", "name": "Core Systemer", "count": 4},
+    {"id": "data-control", "name": "Data Control Center", "count": 3},
+    {"id": "websites-tools", "name": "Websites & Tools", "count": 6},
+    {"id": "integrations", "name": "Aktive Integrationer", "count": 10},
+    {"id": "infrastructure", "name": "Infrastruktur", "count": 3},
+    {"id": "source-code", "name": "Source Code", "count": 6},
+    {"id": "active-dev", "name": "Under Aktiv Udvikling", "count": 5},
+    {"id": "strategic-plans", "name": "Strategiske Planer", "count": 4},
+    {"id": "clients", "name": "Kunder & Demos", "count": 5},
+    {"id": "new-products", "name": "Nye Produkter", "count": 5},
+    {"id": "backlog", "name": "Backlog", "count": 3},
+    {"id": "tech-debt", "name": "Teknisk Gæld", "count": 13}
+  ]
+}
+</script>
+
 </body>
 </html>
