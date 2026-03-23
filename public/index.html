@@ -577,6 +577,12 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         <div class="c-expand">
 <h5>Storyline</h5><p>Som klub-administrator ønsker jeg et admin-panel til at styre roster, tøjaftaler og bestillinger, så jeg har fuldt overblik.</p>
 <h5>Beskrivelse</h5><p>Next.js 15.3 admin portal med @tailwindcss/forms. Multi-role auth: B2B admin, club admin, staff. Club management med roster, kit setup, agreements og order tracking.</p>
+<h5>Nye moduler (fra Casper-samtale 23-03)</h5><ul class="ac-list">
+<li><b>Klub-dashboard</b> — Bestyrelsen vil se fanshop-performance, omsætning, forecast/predictor, kickback-beregning. Lise Glerup (HIF) har efterspurgt dette.</li>
+<li><b>Dekorationsmodul</b> — Klubben kan tilkøbe sponsor-logo-placering på tøj direkte i platformen. Vælg placering (ryg, mave, etc.), upload logo, prisberegning. Split-fakturering: klub + sponsor (CVR-opslag).</li>
+<li><b>Bestillingsflow</b> — Holdleder vælger model/farve/størrelse/antal → tilkøb dekoration → vælg betalingsmetode (hel/delvis/sponsor) → fakturér.</li>
+<li><b>Voucher-system</b> — Trænere kan bestille tøj 2x/år via vouchers (ad hoc, ikke pulje).</li>
+<li><b>Visuelt print-preview</b> — På sigt: se trøje med logo-placering visuelt i platformen.</li></ul>
 <h5>Acceptkriterier</h5><ul class="ac-list"><li>Klub-admin kan logge ind og se eget roster</li><li>B2B admin kan se alle klubber</li><li>Kit setup syncer med Fanshop-produkter</li><li>Ordrehistorik tilgængelig per klub</li></ul></div>
       </div>
 
@@ -714,8 +720,8 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </div>
         <div class="c" data-cat="client">
           <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🎯</div>
-            <div><div class="c-t">HIF Håndbold</div><div class="c-s">Demo — logo + farver modtaget</div></div></div>
-          <div class="c-b"><ul><li>Demo baseret på RHK-platform</li><li>Casper har sendt logo + farver</li><li>Sport showcase for ny klub</li></ul><span class="tg t6">Demo</span><span class="tg t2">I gang</span></div>
+            <div><div class="c-t">HIF Håndbold</div><div class="c-s">Demo — Lise Glerup · Hvidovre</div></div></div>
+          <div class="c-b"><ul><li>Fanshop-demo i HIF-farver (kopi af REHH)</li><li>URL: b2bpromotion.dk/shophif</li><li>Produkter: spillersæt, rejsesæt, håndbolde</li><li>Lise vil se klub-dashboard med performance</li><li>Casper pitcher som konkurrent til Sportified</li></ul><span class="tg t6">Demo</span><span class="tg t2">I gang</span></div>
         </div>
         <div class="c" data-cat="client">
           <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🏛️</div>
@@ -724,8 +730,8 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </div>
         <div class="c" data-cat="client" data-links="gaveshop">
           <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🎁</div>
-            <div><div class="c-t">Dansk Firmagaver / Marianne Lund</div><div class="c-s">Domæne b2bfirmagaver.dk · Samarbejde</div></div></div>
-          <div class="c-b"><ul><li>Casper kontaktet via LinkedIn</li><li>Domæneoverdragelse: b2bfirmagaver.dk</li><li>Potentielt samarbejde om firmagaver</li><li>Kaffemøde aftalt — Marianne i Esbjerg</li><li>Ribe-setup: lager, trykkeri, showroom (sommer '26)</li></ul><span class="tg t6">Prospekt</span><span class="tg t1">Positivt svar</span></div>
+            <div><div class="c-t">Dansk Firmagaver / Marianne Lund</div><div class="c-s">Overtagelse + fusion · b2bfirmagaver.dk</div></div></div>
+          <div class="c-b"><ul><li>Mål: Overtag forretning + domæne b2bfirmagaver.dk</li><li>Marianne: enkeltmandsfirma, Tømrervej, Esbjerg</li><li>Tidligere stor forretning, nu nedtrappet</li><li>Værdi: indkøbsaftaler (Georg Jensen, Stelton), kunder, varelager, erfaring</li><li>Tidligere partner for Det Faglige Hus</li><li>Kaffemøde planlagt — Casper kører til Ribe/Esbjerg</li><li>Strategi: overtag, lad Marianne være konsulent</li></ul><span class="tg t6">Prospekt</span><span class="tg t1">Positivt svar</span></div>
         </div>
       </div>
     </div>
@@ -802,10 +808,28 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         <div class="c-b"><ul><li>Konfigurator til site</li><li>CMS etablering</li><li>Tablet + telefon</li></ul><span class="tg t3">Feature</span></div>
       </div>
 
-      <div class="c" data-id="varelager" data-links="warehouse-app,master-api" data-cat="task">
+      <div class="c" data-id="varelager" data-links="warehouse-app,master-api" data-cat="task" data-expand="varelager-expand">
         <div class="c-h"><div class="c-ico" style="background:rgba(239,68,68,.1);color:#ef4444">📦</div>
-          <div><div class="c-t">Varelagerstyring</div><div class="c-s">Stock & production · Warehouse App</div></div></div>
-        <div class="c-b"><ul><li>Indkøb & produktion</li><li>Lagerstyring via Warehouse App</li><li>Integration med Master API</li><li>→ Data Center</li></ul><span class="tg t3">Planlagt</span></div>
+          <div><div class="c-t">Varelagerstyring</div><div class="c-s">Purchase-modul · Stock · Produktion · Warehouse App</div></div></div>
+        <div class="c-b"><ul><li>Vareindkøb → Varemodtagelse → Lagerstyring</li><li>QR-scan lagerlokationer (Warehouse App)</li><li>Produktion → Plukliste → Følgeseddel</li><li>Integration med Master API & Data Center</li></ul><span class="tg t3">Planlagt</span></div>
+      </div>
+      <div class="expand-content" id="varelager-expand">
+        <h3>📦 Varelagerstyring — Purchase-modul</h3>
+        <p>Komplet flow fra indkøb til levering, som Casper har beskrevet:</p>
+        <h4>Flow: Vareindkøb → Levering</h4>
+        <ol>
+          <li><strong>Vareindkøb</strong> — Bestilling hos leverandører, indkøbsordrer</li>
+          <li><strong>Varemodtagelse</strong> — Registrering af modtagne varer, kvalitetskontrol</li>
+          <li><strong>Lagerstyring via QR-scan</strong> — Warehouse App (Expo/React Native) scanner QR-koder på lagerlokationer for placering og optælling</li>
+          <li><strong>Produktion</strong> — Varer flyttes fra lager til produktion, dekorering/trykning</li>
+          <li><strong>Plukliste & Følgeseddel</strong> — Automatisk generering af pluklister til lagermedarbejdere, følgeseddel til forsendelse</li>
+        </ol>
+        <h4>Teknisk</h4>
+        <ul>
+          <li>Warehouse App (iOS via TestFlight) — QR-scanning, lagerlokationer</li>
+          <li>Master API integration — produktdata, lagerbeholdning</li>
+          <li>Data Center kobling — realtids-overblik over lagerstatus</li>
+        </ul>
       </div>
 
       <div class="c" data-cat="task">
