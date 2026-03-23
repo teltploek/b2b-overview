@@ -131,18 +131,34 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 .c-sm.conn-dim{opacity:.15!important;transition:opacity .2s}
 .c:not(.conn-source):not(.conn-target):not(.conn-dim),.repo-card:not(.conn-target):not(.conn-dim){transition:opacity .2s}
 
-/* ── Expandable card details (PBI-format) ── */
-.c-expand{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .25s;padding:0 12px;border-top:0 solid rgba(79,109,245,.1);font-size:9px;color:#444;line-height:1.5}
-.c.expanded .c-expand{max-height:600px;padding:10px 12px 12px;border-top:1px solid rgba(79,109,245,.1)}
-.c-expand h5{font-size:8px;text-transform:uppercase;letter-spacing:.8px;color:#4f6df5;margin:6px 0 2px;font-weight:700}
-.c-expand h5:first-child{margin-top:0}
-.c-expand p{margin:0 0 4px;font-size:9px;color:#555}
-.c-expand .ac-list{margin:2px 0 0;padding-left:14px}
-.c-expand .ac-list li{font-size:8.5px;color:#555;padding:1px 0;list-style:disc}
-.c-expand .ac-list li::before{content:none}
-.c[data-expand]{cursor:pointer;position:relative}
-.c[data-expand]::after{content:'▾';position:absolute;top:10px;right:10px;font-size:9px;color:#bbb;transition:transform .25s}
-.c[data-expand].expanded::after{transform:rotate(180deg);color:#4f6df5}
+/* ── Expandable card details (PBI-format) — hidden in card, shown in modal ── */
+.c-expand{display:none}
+.c[data-expand]{cursor:pointer;position:relative;transition:border-color .15s,box-shadow .15s}
+.c[data-expand]::after{content:'ℹ️';position:absolute;top:8px;right:8px;font-size:10px;opacity:.5;transition:opacity .15s}
+.c[data-expand]:hover::after{opacity:1}
+.c[data-expand]:hover{border-color:rgba(79,109,245,.4);box-shadow:0 2px 12px rgba(79,109,245,.12)}
+/* Pulsing subtle border on expandable cards */
+.c[data-expand]{border-left:2.5px solid rgba(79,109,245,.35)}
+
+/* ── Modal overlay ── */
+#modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:2000;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:24px}
+#modal-overlay.open{display:flex}
+#modal-box{background:#fff;border-radius:14px;max-width:560px;width:100%;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);position:relative;animation:modalIn .2s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+#modal-header{display:flex;align-items:center;gap:10px;padding:16px 20px 12px;border-bottom:1px solid rgba(0,0,0,.08);position:sticky;top:0;background:#fff;border-radius:14px 14px 0 0;z-index:1}
+#modal-header .c-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+#modal-title{font-size:15px;font-weight:700;color:#1a1a2e}
+#modal-sub{font-size:11px;color:#888;margin-top:1px}
+#modal-close{position:absolute;top:12px;right:14px;background:rgba(0,0,0,.06);border:none;border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;color:#666;display:flex;align-items:center;justify-content:center;transition:background .12s}
+#modal-close:hover{background:rgba(0,0,0,.12);color:#1a1a2e}
+#modal-body{padding:16px 20px 20px;font-size:12px;color:#444;line-height:1.65}
+#modal-body h5{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#4f6df5;margin:14px 0 4px;font-weight:700}
+#modal-body h5:first-child{margin-top:0}
+#modal-body p{margin:0 0 6px;font-size:12px;color:#555}
+#modal-body .ac-list{margin:4px 0 0;padding-left:18px}
+#modal-body .ac-list li{font-size:11px;color:#555;padding:2px 0;list-style:disc}
+#modal-body .ac-list li::before{content:none}
+#modal-tags{padding:0 20px 16px;display:flex;gap:4px;flex-wrap:wrap}
 
 /* Status indicators */
 .status-badge{display:inline-flex;align-items:center;gap:3px;font-size:7.5px;padding:2px 6px;border-radius:3px;font-weight:600}
@@ -163,11 +179,12 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   #leg h4{font-size:7px}
   .li{font-size:7.5px}
   #mm{display:none}
-  .c-expand{font-size:10px}
-  .c-expand h5{font-size:9px}
-  .c-expand p{font-size:10px}
-  .c-expand .ac-list li{font-size:9.5px}
-  .c[data-expand]::after{font-size:12px;top:8px;right:8px}
+  #modal-box{max-width:92vw;max-height:85vh}
+  #modal-body{font-size:13px}
+  #modal-body h5{font-size:11px}
+  #modal-body p{font-size:13px}
+  #modal-body .ac-list li{font-size:12px}
+  .c[data-expand]::after{font-size:12px}
 }
 @media(max-width:480px){
   #bar h1{font-size:12px}
@@ -212,7 +229,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
     <div class="zone-hdr"><h3 style="color:#059669">Core Systemer</h3><span class="sub">Kører i produktion lige nu</span></div>
     <div class="cards cards-4">
 
-      <div class="c" data-cat="prod" data-id="master-api" data-expand="1" data-links="master-mod,api-san,promotion-api" data-status="live" data-tech=".net,razor-pages,ef-core">
+      <div class="c" data-cat="prod" data-id="master-api" data-expand="1" data-links="master-mod,api-san,promotion-api" data-status="live" data-tech=".net,razor-pages,ef-core" data-repo="B2BPromotionGUI">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">🗄️</div>
           <div><div class="c-t">Master API</div><div class="c-s">.NET · Razor Pages · EF Core</div></div></div>
         <div class="c-b"><ul>
@@ -220,8 +237,8 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Economics integration (e-conomic)</li>
           <li>Request/ordre workflow</li>
           <li>Proff API (CVR opslag)</li>
-        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t4">.NET</span></div></div>
-      
+        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t4">.NET</span></div><a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/B2BPromotionGUI" target="_blank">B2BPromotionGUI</a></div>
+
         <div class="c-expand">
 <h5>Storyline</h5><p>Som sælger ønsker jeg adgang til kunder, ordrer og produkter via ét centralt system, så jeg kan håndtere hele salgsflowet effektivt.</p>
 <h5>Beskrivelse</h5><p>Master API er den centrale .NET-baserede backend der integrerer med e-conomic, Proff API og håndterer hele request/ordre-workflowet. Kører på Windows Server via NSSM.</p>
@@ -229,7 +246,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 <h5>Acceptkriterier</h5><ul class="ac-list"><li>GET /customers returnerer pagineret liste</li><li>POST /orders opretter ordre i Master + e-conomic</li><li>Proff API CVR-opslag returnerer firmaoplysninger</li></ul></div>
       </div>
 
-      <div class="c" data-cat="prod" data-id="crm-dashboard" data-expand="1" data-links="crm-api-docs,tidsreg,sport-admin" data-status="live" data-tech="nextjs,zustand,dnd-kit">
+      <div class="c" data-cat="prod" data-id="crm-dashboard" data-repo="b2b-crm-hr-dashboard" data-expand="1" data-links="crm-api-docs,tidsreg,sport-admin" data-status="live" data-tech="nextjs,zustand,dnd-kit">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">📈</div>
           <div><div class="c-t">B2B Group Dashboard</div><div class="c-s">Next.js 15.3 · zustand · dnd-kit · :3003</div></div></div>
         <div class="c-b"><ul>
@@ -238,7 +255,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Finance & my-activity moduler</li>
           <li>Auth integration & i18n</li>
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t4">Next.js</span></div>
-        <a class="c-repo" href="https://github.com/teltploek/b2b-crm-dashboard" target="_blank">b2b-crm-dashboard · 16 commits</a>
+        <a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-crm-hr-dashboard" target="_blank">b2b-crm-hr-dashboard</a>
         <div class="act-bar"><div class="act-fill" style="width:22%;background:#34d399"></div></div></div>
       
         <div class="c-expand">
@@ -248,14 +265,14 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 <h5>Acceptkriterier</h5><ul class="ac-list"><li>Salgspipeline viser alle aktive requests</li><li>HR vagtplan tillader drag-and-drop</li><li>Finance-modul syncer med e-conomic</li><li>Sentry fejlrate under 5/uge</li></ul></div>
       </div>
 
-      <div class="c" data-id="promotion-api" data-expand="1" data-links="ny-webshop,api-san,legacy-webshop" data-cat="prod" data-status="live" data-tech=".net10,dual-db,swagger">
+      <div class="c" data-id="promotion-api" data-expand="1" data-links="ny-webshop,api-san,legacy-webshop" data-cat="prod" data-status="live" data-tech=".net10,dual-db,swagger" data-repo="b2b-promotion-api">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">🔌</div>
           <div><div class="c-t">Promotion API</div><div class="c-s">.NET 10 · Dual DB · Swagger</div></div></div>
         <div class="c-b"><ul>
           <li>REST API til Ny Promotion Webshop</li>
           <li>Dual DB (v2 + nopCommerce)</li>
           <li>Produkter, kategorier, ordrer</li>
-        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t2">Kræver sanitering</span></div></div>
+        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t2">Kræver sanitering</span></div><a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-promotion-api" target="_blank">b2b-promotion-api</a></div>
       
         <div class="c-expand">
 <h5>Storyline</h5><p>Som webshop-frontend ønsker jeg et stabilt REST API til produkter, kategorier og ordrer, så kunderne kan handle online.</p>
@@ -264,7 +281,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 <h5>Acceptkriterier</h5><ul class="ac-list"><li>GET /api/v1/Customers?phone=X returnerer match</li><li>POST /api/v1/Customers opretter med duplicate-check</li><li>Swagger dokumentation komplet for alle endpoints</li><li>Ingen hardcoded IPs i kodebasen</li></ul></div>
       </div>
 
-      <div class="c" data-id="fanshop" data-expand="1" data-links="promotion-api,sport-web,sport-admin" data-cat="prod" data-status="live" data-tech="nextjs,bambora,mobilepay">
+      <div class="c" data-id="fanshop" data-repo="b2b-fanshop" data-expand="1" data-links="promotion-api,sport-web,sport-admin" data-cat="prod" data-status="live" data-tech="nextjs,bambora,mobilepay">
         <div class="c-h"><div class="c-ico" style="background:rgba(236,72,153,.1);color:#ec4899">🛒</div>
           <div><div class="c-t">RHK Fanshop</div><div class="c-s">Next.js 15.5 · Zod · zustand · :3009</div></div></div>
         <div class="c-b"><ul>
@@ -273,7 +290,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Bambora/MobilePay betaling</li>
           <li>Deploy via ADO → b2bpromotion.dk</li>
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t6">E-commerce</span></div>
-        <a class="c-repo" href="https://github.com/teltploek/b2b-fanshop" target="_blank">b2b-fanshop · 12 commits</a>
+        <a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-fanshop" target="_blank">b2b-fanshop</a>
         <div class="act-bar"><div class="act-fill" style="width:16%;background:#ec4899"></div></div></div>
       
         <div class="c-expand">
@@ -291,7 +308,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
     <div class="zone-hdr"><h3 style="color:#0284c7">Data Control Center</h3><span class="sub">Datakontrol-modul — ugentlig leverandørdata-rutine</span></div>
     <div class="cards cards-3">
 
-      <div class="c" data-id="advarsels-dash" data-links="data-center,prisstyring" data-cat="prod" data-status="live">
+      <div class="c" data-id="advarsels-dash" data-links="data-center,prisstyring" data-cat="prod" data-status="live" data-repo="b2b-crm-hr-dashboard/datacontrol">
         <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">🔔</div>
           <div><div class="c-t">Advarselsdashboard</div><div class="c-s">7 alert-kategorier · Filtrering</div></div></div>
         <div class="c-b"><ul>
@@ -303,7 +320,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t7">Data</span></div></div>
       </div>
 
-      <div class="c" data-id="mapping-wizard" data-links="data-center,advarsels-dash" data-expand="1" data-cat="prod" data-status="live" data-needs="dropdown-produkttyper;ai-materiale-mapping;giving-2.0-validering">
+      <div class="c" data-id="mapping-wizard" data-links="data-center,advarsels-dash" data-expand="1" data-cat="prod" data-status="live" data-needs="dropdown-produkttyper;ai-materiale-mapping;giving-2.0-validering" data-repo="b2b-crm-hr-dashboard/datacontrol">
         <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">🗺️</div>
           <div><div class="c-t">Produktmapping Wizard</div><div class="c-s">4-trins guide · AI-oversættelse</div></div></div>
         <div class="c-b"><ul>
@@ -341,37 +358,40 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
     <div class="zone-hdr"><h3 style="color:#3b5ce4">Websites & Tools</h3><span class="sub">Marketing sites, plugins, medieproduktion</span></div>
     <div class="cards cards-5">
 
-      <div class="c" data-id="group-web" data-cat="prod" data-status="live">
+      <div class="c" data-id="group-web" data-repo="b2b-group-website" data-cat="prod" data-status="live">
         <div class="c-h"><div class="c-ico" style="background:rgba(79,109,245,.1);color:#4f6df5">🌐</div>
           <div><div class="c-t">Group Website</div><div class="c-s">Next.js 15.5 · i18n · :3008</div></div></div>
         <div class="c-b"><ul><li>Moderselskab profil</li><li>Google Maps integration</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div>
-        <a class="c-repo" href="https://github.com/teltploek/b2bgroup" target="_blank">b2bgroup · 13 commits</a></div>
+        <a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-group-website" target="_blank">b2b-group-website</a></div>
       </div>
 
-      <div class="c" data-id="sport-web" data-links="sport-admin,fanshop,b2bsport-repo" data-cat="prod" data-status="live" data-tech="nextjs,xy-flow">
+      <div class="c" data-id="sport-web" data-repo="b2b-sport-website" data-links="sport-admin,fanshop,b2bsport-repo" data-cat="prod" data-status="live" data-tech="nextjs,xy-flow">
         <div class="c-h"><div class="c-ico" style="background:rgba(52,211,153,.1);color:#34d399">⚽</div>
           <div><div class="c-t">Sport Website</div><div class="c-s">Next.js 14 · XY Flow · :3002</div></div></div>
         <div class="c-b"><ul><li>b2bsport.dk — mest aktive repo</li><li>DA / EN · workflow redesign</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div>
-        <a class="c-repo" href="https://github.com/teltploek/b2bsport" target="_blank">b2bsport · 73 commits</a>
+        <a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-sport-website" target="_blank">b2b-sport-website</a>
         <div class="act-bar"><div class="act-fill" style="width:100%;background:#34d399"></div></div></div>
       </div>
 
-      <div class="c" data-id="outlook-plugin" data-cat="prod" data-status="live">
+      <div class="c" data-id="outlook-plugin" data-repo="b2bpromotion-outlook-plugin" data-cat="prod" data-status="live">
         <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">📧</div>
           <div><div class="c-t">Outlook Plugin</div><div class="c-s">Office Add-in</div></div></div>
-        <div class="c-b"><ul><li>Promotion i Outlook</li><li>Desktop + Web</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div></div>
+        <div class="c-b"><ul><li>Promotion i Outlook</li><li>Desktop + Web</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div>
+        <a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2bpromotion-outlook-plugin" target="_blank">b2bpromotion-outlook-plugin</a></div>
       </div>
 
-      <div class="c" data-id="led-banners" data-cat="prod" data-status="live">
+      <div class="c" data-id="led-banners" data-repo="b2b-led-banners" data-cat="prod" data-status="live">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">📺</div>
           <div><div class="c-t">LED Banners</div><div class="c-s">Bash/ffmpeg</div></div></div>
-        <div class="c-b"><ul><li>Team Esbjerg</li><li>TMS Ringsted</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div></div>
+        <div class="c-b"><ul><li>Team Esbjerg</li><li>TMS Ringsted</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div>
+        <a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-led-banners" target="_blank">b2b-led-banners</a></div>
       </div>
 
-      <div class="c" data-id="legacy-webshop" data-links="ny-webshop,promotion-api" data-cat="prod" data-status="legacy">
+      <div class="c" data-id="legacy-webshop" data-repo="NopCommerce-V4.80.8" data-links="ny-webshop,promotion-api" data-cat="prod" data-status="legacy">
         <div class="c-h"><div class="c-ico" style="background:rgba(239,68,68,.1);color:#ef4444">🗃️</div>
           <div><div class="c-t">Legacy Webshop</div><div class="c-s">nopCommerce · .NET</div></div></div>
-        <div class="c-b"><ul><li>Erstattes af Ny Promotion Webshop</li><li>DB bruges stadig af Promotion API</li></ul><div style="margin-top:3px"><span class="tg t3">Legacy</span></div></div>
+        <div class="c-b"><ul><li>Erstattes af Ny Promotion Webshop</li><li>DB bruges stadig af Promotion API</li></ul><div style="margin-top:3px"><span class="tg t3">Legacy</span></div>
+        <a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/NopCommerce-V4.80.8" target="_blank">NopCommerce-V4.80.8</a></div>
       </div>
 
     </div>
@@ -535,7 +555,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 <h5>Acceptkriterier</h5><ul class="ac-list"><li>Checkout-flow under 3 klik</li><li>Print-placering visuelt konfigurerbar</li><li>API 3.0 integration med Toppoint produkter</li><li>Responsiv på mobil og tablet</li></ul></div>
       </div>
 
-      <div class="c" data-id="sport-admin" data-expand="1" data-links="sport-web,crm-dashboard,fanshop" data-cat="dev" data-status="dev" data-tech="nextjs,xy-flow">
+      <div class="c" data-id="sport-admin" data-repo="b2b-sport-platform" data-expand="1" data-links="sport-web,crm-dashboard,fanshop" data-cat="dev" data-status="dev" data-tech="nextjs,xy-flow">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">🏟️</div>
           <div><div class="c-t">Sport Admin Platform</div><div class="c-s">Next.js 15.3 · @tailwindcss/forms</div></div></div>
         <div class="c-b"><ul>
@@ -544,7 +564,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Multi-role: B2B admin, club admin, staff</li>
           <li>Auth med login + dashboard per rolle</li>
         </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span></div>
-        <a class="c-repo" href="https://github.com/teltploek/b2b-sport-admin" target="_blank">b2b-sport-admin · 8 commits</a>
+        <a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-sport-platform" target="_blank">b2b-sport-platform</a>
         <div class="act-bar"><div class="act-fill" style="width:11%;background:#f59e0b"></div></div></div>
       
         <div class="c-expand">
@@ -586,7 +606,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
       </div>
 
 
-      <div class="c" data-id="warehouse-app" data-expand="1" data-cat="dev" data-status="dev" data-tech="expo,react-native" data-needs="funktionalitet;master-api-integration;b2b-design">
+      <div class="c" data-id="warehouse-app" data-repo="b2b-group-warehouse-app" data-expand="1" data-cat="dev" data-status="dev" data-tech="expo,react-native" data-needs="funktionalitet;master-api-integration;b2b-design">
         <div class="c-h"><div class="c-ico" style="background:rgba(245,158,11,.1);color:#f59e0b">📱</div>
           <div><div class="c-t">Warehouse App</div><div class="c-s">Expo · React Native · TestFlight</div></div></div>
         <div class="c-b"><ul>
@@ -594,7 +614,8 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Built med Expo framework</li>
           <li>Submitted til Apple TestFlight</li>
           <li>Developer account godkendt</li>
-        </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span><span class="tg t6">Mobile</span></div></div>
+        </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span><span class="tg t6">Mobile</span></div>
+        <a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-group-warehouse-app" target="_blank">b2b-group-warehouse-app</a></div>
         <div class="c-expand">
 <h5>Storyline</h5><p>Som lagermedarbejder ønsker jeg en mobil-app til lagerstyring, så jeg kan scanne og registrere varer direkte fra lageret.</p>
 <h5>Beskrivelse</h5><p>React Native app bygget med Expo framework. Deployed via TestFlight til Apple iOS. Apple Developer account godkendt (12-03). Andreas har udviklet MVP (jan 2026) og tester pt. på egen enhed (mar 2026). Dokumentation oprettet som "B2B Group Warehouse App". Der er lavet en AI Agent-instruktionsfil, som en agent kan læse til automatiseret udvikling. MVP demo-video tilgængelig på Google Drive.</p>
@@ -844,6 +865,19 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 </div><!-- /cv -->
 </div><!-- /wrap -->
 
+<!-- Modal overlay -->
+<div id="modal-overlay">
+  <div id="modal-box">
+    <div id="modal-header">
+      <div class="c-ico" id="modal-ico"></div>
+      <div><div id="modal-title"></div><div id="modal-sub"></div></div>
+      <button id="modal-close">✕</button>
+    </div>
+    <div id="modal-tags"></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
 <div id="leg">
   <h4>Status</h4>
   <div class="li"><div class="lc" style="background:#34d399"></div> Live</div>
@@ -965,16 +999,54 @@ updateSvgSize();
 new ResizeObserver(updateSvgSize).observe(document.querySelector('.board'));
 
 
-/* ── Expandable card click handler ── */
+/* ── Modal system for expandable cards ── */
+const overlay=document.getElementById('modal-overlay');
+const mBox=document.getElementById('modal-box');
+const mIco=document.getElementById('modal-ico');
+const mTitle=document.getElementById('modal-title');
+const mSub=document.getElementById('modal-sub');
+const mTags=document.getElementById('modal-tags');
+const mBody=document.getElementById('modal-body');
+const mClose=document.getElementById('modal-close');
+
+function openModal(card){
+  // Extract info from card
+  const ico=card.querySelector('.c-ico');
+  const title=card.querySelector('.c-t');
+  const sub=card.querySelector('.c-s');
+  const expand=card.querySelector('.c-expand');
+  const tags=card.querySelector('.c-b');
+  if(!expand)return;
+  // Populate modal
+  mIco.style.cssText=ico?ico.style.cssText:'';
+  mIco.textContent=ico?ico.textContent:'';
+  mTitle.textContent=title?title.textContent:'';
+  mSub.textContent=sub?sub.textContent:'';
+  // Copy tags
+  const tagEls=tags?tags.querySelectorAll('.tg'):[];
+  mTags.innerHTML='';
+  tagEls.forEach(t=>{const c=t.cloneNode(true);c.style.fontSize='9px';mTags.appendChild(c);});
+  // Copy expand content
+  mBody.innerHTML=expand.innerHTML;
+  // Show
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+  overlay.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+mClose.addEventListener('click',closeModal);
+overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('open'))closeModal();});
+
 document.querySelectorAll('[data-expand]').forEach(card => {
   card.addEventListener('click', function(e) {
-    // Don't toggle if clicking a link
     if(e.target.tagName === 'A') return;
-    this.classList.toggle('expanded');
-    // Close others
-    document.querySelectorAll('[data-expand].expanded').forEach(c => {
-      if(c !== this) c.classList.remove('expanded');
-    });
+    e.stopPropagation();
+    openModal(this);
   });
 });
 </script>
@@ -986,22 +1058,22 @@ document.querySelectorAll('[data-expand]').forEach(card => {
   "version": "2026-03-23",
   "systems": [
     {"id": "master-api", "name": "Master API", "zone": "core-systems", "status": "live", "tech": [".NET", "Razor Pages", "EF Core"], "links": ["master-mod", "api-san", "promotion-api"], "repo": null, "needs": [], "description": "Source of truth: Kunder, Ordrer, Produkter. Economics integration, Request/ordre workflow, Proff API."},
-    {"id": "crm-dashboard", "name": "B2B Group Dashboard", "zone": "core-systems", "status": "live", "tech": ["Next.js", "zustand", "dnd-kit"], "links": ["crm-api-docs", "tidsreg", "sport-admin"], "repo": "b2b-crm-dashboard", "needs": [], "description": "Salgspipeline & ordrestyring, HR vagtplan/ferie, Finance & my-activity moduler"},
+    {"id": "crm-dashboard", "name": "B2B Group Dashboard", "zone": "core-systems", "status": "live", "tech": ["Next.js", "zustand", "dnd-kit"], "links": ["crm-api-docs", "tidsreg", "sport-admin"], "repo": "b2b-crm-hr-dashboard", "needs": [], "description": "Salgspipeline & ordrestyring, HR vagtplan/ferie, Finance & my-activity moduler"},
     {"id": "promotion-api", "name": "Promotion API", "zone": "core-systems", "status": "live", "tech": [".NET 10", "Dual DB", "Swagger"], "links": ["ny-webshop", "api-san", "legacy-webshop"], "repo": null, "needs": ["sanitering", "rate-limiting", "hardcoded-ips"], "description": "REST API til produkter, kategorier, ordrer. Dual DB (v2 + nopCommerce)."},
     {"id": "fanshop", "name": "RHK Fanshop", "zone": "core-systems", "status": "live", "tech": ["Next.js", "Bambora", "MobilePay"], "links": ["promotion-api", "sport-web", "sport-admin"], "repo": "b2b-fanshop", "needs": [], "description": "E-commerce platform med personalisering, Bambora/MobilePay betaling"},
     {"id": "advarsels-dash", "name": "Advarselsdashboard", "zone": "data-control", "status": "live", "tech": [], "links": ["data-center", "prisstyring"], "repo": null, "needs": [], "description": "Alert-kategorier, manglende SKU, kostprisændringer"},
     {"id": "mapping-wizard", "name": "Produktmapping Wizard", "zone": "data-control", "status": "live", "tech": [], "links": ["data-center", "advarsels-dash"], "repo": null, "needs": ["dropdown-produkttyper", "ai-materiale-mapping", "giving-2.0-validering"], "description": "4-trins guide til leverandørdata-mapping med AI-oversættelse"},
     {"id": "prisstyring", "name": "Prisstyring", "zone": "data-control", "status": "live", "tech": [], "links": ["advarsels-dash", "mapping-wizard"], "repo": null, "needs": [], "description": "Tier-baseret prisgennemgang, auto-foreslåede salgspriser"},
-    {"id": "group-web", "name": "Group Website", "zone": "websites-tools", "status": "live", "tech": ["Next.js"], "links": [], "repo": "b2bgroup", "needs": [], "description": "Moderselskab profil, Google Maps integration"},
-    {"id": "sport-web", "name": "Sport Website", "zone": "websites-tools", "status": "live", "tech": ["Next.js", "XY Flow"], "links": ["sport-admin", "fanshop"], "repo": "b2bsport", "needs": [], "description": "b2bsport.dk — mest aktive repo, DA/EN workflow redesign"},
-    {"id": "outlook-plugin", "name": "Outlook Plugin", "zone": "websites-tools", "status": "live", "tech": [], "links": [], "repo": null, "needs": [], "description": "Office Add-in til Promotion i Outlook"},
-    {"id": "led-banners", "name": "LED Banners", "zone": "websites-tools", "status": "live", "tech": [], "links": [], "repo": null, "needs": [], "description": "Team Esbjerg, TMS Ringsted"},
-    {"id": "legacy-webshop", "name": "Legacy Webshop", "zone": "websites-tools", "status": "legacy", "tech": ["nopCommerce"], "links": ["ny-webshop", "promotion-api"], "repo": null, "needs": [], "description": "Erstattes af Ny Promotion Webshop, men DB bruges af Promotion API"},
+    {"id": "group-web", "name": "Group Website", "zone": "websites-tools", "status": "live", "tech": ["Next.js"], "links": [], "repo": "b2b-group-website", "needs": [], "description": "Moderselskab profil, Google Maps integration"},
+    {"id": "sport-web", "name": "Sport Website", "zone": "websites-tools", "status": "live", "tech": ["Next.js", "XY Flow"], "links": ["sport-admin", "fanshop"], "repo": "b2b-sport-website", "needs": [], "description": "b2bsport.dk — mest aktive repo, DA/EN workflow redesign"},
+    {"id": "outlook-plugin", "name": "Outlook Plugin", "zone": "websites-tools", "status": "live", "tech": [], "links": [], "repo": "b2bpromotion-outlook-plugin", "needs": [], "description": "Office Add-in til Promotion i Outlook"},
+    {"id": "led-banners", "name": "LED Banners", "zone": "websites-tools", "status": "live", "tech": [], "links": [], "repo": "b2b-led-banners", "needs": [], "description": "Team Esbjerg, TMS Ringsted"},
+    {"id": "legacy-webshop", "name": "Legacy Webshop", "zone": "websites-tools", "status": "legacy", "tech": ["nopCommerce"], "links": ["ny-webshop", "promotion-api"], "repo": "NopCommerce-V4.80.8", "needs": [], "description": "Erstattes af Ny Promotion Webshop, men DB bruges af Promotion API"},
     {"id": "ny-webshop", "name": "Ny Promotion Webshop", "zone": "active-dev", "status": "dev", "tech": ["Next.js"], "links": ["promotion-api", "legacy-webshop", "master-api"], "repo": null, "needs": [], "description": "Modern webshop med minimal friktion checkout, konfigurator"},
-    {"id": "sport-admin", "name": "Sport Admin Platform", "zone": "active-dev", "status": "dev", "tech": ["Next.js", "XY Flow"], "links": ["sport-web", "crm-dashboard", "fanshop"], "repo": "b2b-sport-admin", "needs": [], "description": "Club mgmt, roster, kit setup, agreements & order tracking"},
+    {"id": "sport-admin", "name": "Sport Admin Platform", "zone": "active-dev", "status": "dev", "tech": ["Next.js", "XY Flow"], "links": ["sport-web", "crm-dashboard", "fanshop"], "repo": "b2b-sport-platform", "needs": [], "description": "Club mgmt, roster, kit setup, agreements & order tracking"},
     {"id": "oppetid", "name": "Oppetids-monitorering", "zone": "active-dev", "status": "dev", "tech": [], "links": [], "repo": null, "needs": [], "description": "Health checks og alerting for alle services"},
     {"id": "ai-auto", "name": "AI & Automatisering", "zone": "active-dev", "status": "dev", "tech": ["Claude", "Ralph"], "links": [], "repo": null, "needs": [], "description": "Cowork til roadmap-styring, Ralph PRD-agent, AI-samhandelsaftaler"},
-    {"id": "warehouse-app", "name": "Warehouse App", "zone": "active-dev", "status": "dev", "tech": ["Expo", "React Native"], "links": [], "repo": null, "needs": ["funktionalitet", "master-api-integration", "b2b-design"], "description": "Lager-app til mobil (iOS) via TestFlight"},
+    {"id": "warehouse-app", "name": "Warehouse App", "zone": "active-dev", "status": "dev", "tech": ["Expo", "React Native"], "links": [], "repo": "b2b-group-warehouse-app", "needs": ["funktionalitet", "master-api-integration", "b2b-design"], "description": "Lager-app til mobil (iOS) via TestFlight"},
     {"id": "api-san", "name": "API Sanitering", "zone": "strategic-plans", "status": "planned", "tech": [], "links": ["promotion-api", "master-api"], "repo": null, "needs": ["sanitering", "rate-limiting", "hardcoded-ips"], "description": "Connection leak fix, Customer CRUD, telefon-søgning, rate limiting"},
     {"id": "master-mod", "name": "Master Modernisering", "zone": "strategic-plans", "status": "planned", "tech": [], "links": ["master-api", "crm-dashboard"], "repo": null, "needs": [], "description": "Razor Pages → API-first, Product API, fix EcconmicsId typo"},
     {"id": "data-center", "name": "Data Center Udvidelse", "zone": "strategic-plans", "status": "planned", "tech": [], "links": ["advarsels-dash", "mapping-wizard", "prisstyring"], "repo": null, "needs": [], "description": "Validering, alarmer, varelagerstyring, Master data governance"},
