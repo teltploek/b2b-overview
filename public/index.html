@@ -82,9 +82,6 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 .c-repo:hover{opacity:1;text-decoration:underline}
 .c-repo::before{content:'⌥';font-size:7px}
 
-/* Activity bar */
-.act-bar{height:3px;border-radius:2px;margin-top:4px;background:rgba(0,0,0,.04);overflow:hidden;position:relative}
-.act-fill{height:100%;border-radius:2px;transition:width .3s}
 
 /* Repo zone */
 .repo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
@@ -111,8 +108,6 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 .li{display:flex;align-items:center;gap:5px;padding:1px 0;color:#555;font-size:8px}
 .lc{width:7px;height:7px;border-radius:2px;flex-shrink:0}
 
-/* Minimap */
-#mm{position:fixed;bottom:10px;right:10px;z-index:999;width:180px;height:100px;background:rgba(255,255,255,.95);border:1px solid rgba(0,0,0,.1);border-radius:6px;overflow:hidden;cursor:pointer;backdrop-filter:blur(10px)}
 
 /* Connection overlay */
 #conn-svg{position:absolute;top:0;left:0;pointer-events:none;z-index:10;overflow:visible}
@@ -178,7 +173,6 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   #leg{bottom:auto;top:92px;left:8px;padding:5px 8px;border-radius:5px;max-width:120px;opacity:.85}
   #leg h4{font-size:7px}
   .li{font-size:7.5px}
-  #mm{display:none}
   #modal-box{max-width:92vw;max-height:85vh}
   #modal-body{font-size:13px}
   #modal-body h5{font-size:11px}
@@ -256,7 +250,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Auth integration & i18n</li>
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t4">Next.js</span></div>
         <a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-crm-hr-dashboard" target="_blank">b2b-crm-hr-dashboard</a>
-        <div class="act-bar"><div class="act-fill" style="width:22%;background:#34d399"></div></div></div>
+        </div>
       
         <div class="c-expand">
 <h5>Storyline</h5><p>Som medarbejder ønsker jeg ét samlet dashboard til salg, HR og økonomi, så jeg kan se alt relevant data ét sted.</p>
@@ -291,7 +285,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Deploy via ADO → b2bpromotion.dk</li>
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t6">E-commerce</span></div>
         <a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-fanshop" target="_blank">b2b-fanshop</a>
-        <div class="act-bar"><div class="act-fill" style="width:16%;background:#ec4899"></div></div></div>
+        </div>
       
         <div class="c-expand">
 <h5>Storyline</h5><p>Som sportsfan ønsker jeg at købe klubtøj online med personalisering, så jeg kan få mit eget navn/nummer på trøjen.</p>
@@ -370,7 +364,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <div><div class="c-t">Sport Website</div><div class="c-s">Next.js 14 · XY Flow · :3002</div></div></div>
         <div class="c-b"><ul><li>b2bsport.dk — mest aktive repo</li><li>DA / EN · workflow redesign</li></ul><div style="margin-top:3px"><span class="tg t1">Live</span></div>
         <a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-sport-website" target="_blank">b2b-sport-website</a>
-        <div class="act-bar"><div class="act-fill" style="width:100%;background:#34d399"></div></div></div>
+        </div>
       </div>
 
       <div class="c" data-id="outlook-plugin" data-repo="b2bpromotion-outlook-plugin" data-cat="prod" data-status="live">
@@ -439,7 +433,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <span class="rc-date">Feb 2026</span>
           <a class="rc-link" href="https://github.com/teltploek/b2bsport" target="_blank">→ repo</a>
         </div>
-        <div class="act-bar"><div class="act-fill" style="width:100%;background:#34d399"></div></div>
+        
       </div>
 
       <div class="repo-card">
@@ -451,7 +445,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <span class="rc-date">Sep 2025</span>
           <a class="rc-link" href="https://github.com/teltploek/b2b-crm-dashboard" target="_blank">→ repo</a>
         </div>
-        <div class="act-bar"><div class="act-fill" style="width:22%;background:#4f6df5"></div></div>
+        
       </div>
 
       <div class="repo-card">
@@ -463,7 +457,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <span class="rc-date">Feb 2026</span>
           <a class="rc-link" href="https://github.com/teltploek/b2bproductbacklog" target="_blank">→ repo</a>
         </div>
-        <div class="act-bar"><div class="act-fill" style="width:14%;background:#0284c7"></div></div>
+        
       </div>
 
       <div class="repo-card">
@@ -475,7 +469,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <span class="rc-date">Oct 2025</span>
           <a class="rc-link" href="https://github.com/teltploek/b2bgroup" target="_blank">→ repo</a>
         </div>
-        <div class="act-bar"><div class="act-fill" style="width:18%;background:#4f6df5"></div></div>
+        
       </div>
 
       <div class="repo-card">
@@ -487,7 +481,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <span class="rc-date">Nov 2025</span>
           <a class="rc-link" href="https://github.com/teltploek/b2b-fanshop" target="_blank">→ repo</a>
         </div>
-        <div class="act-bar"><div class="act-fill" style="width:16%;background:#ec4899"></div></div>
+        
       </div>
 
       <div class="repo-card">
@@ -499,7 +493,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <span class="rc-date">Apr 2025</span>
           <a class="rc-link" href="https://github.com/teltploek/b2b-sport-admin" target="_blank">→ repo</a>
         </div>
-        <div class="act-bar"><div class="act-fill" style="width:11%;background:#f59e0b"></div></div>
+        
       </div>
 
       <div class="repo-card" data-id="crm-api-docs" data-links="crm-dashboard">
@@ -511,7 +505,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <span class="rc-date">Sep 2025</span>
           <a class="rc-link" href="https://github.com/teltploek/b2b-crm-api-docs" target="_blank">→ repo</a>
         </div>
-        <div class="act-bar"><div class="act-fill" style="width:18%;background:#8b5cf6"></div></div>
+        
       </div>
 
     </div>
@@ -566,7 +560,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Auth med login + dashboard per rolle</li>
         </ul><div style="margin-top:3px"><span class="tg t2">Under udvikling</span></div>
         <a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-sport-platform" target="_blank">b2b-sport-platform</a>
-        <div class="act-bar"><div class="act-fill" style="width:11%;background:#f59e0b"></div></div></div>
+        </div>
       
         <div class="c-expand">
 <h5>Storyline</h5><p>Som klub-administrator ønsker jeg et admin-panel til at styre roster, tøjaftaler og bestillinger, så jeg har fuldt overblik.</p>
@@ -801,10 +795,10 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         <div class="c-b"><ul><li>Konfigurator til site</li><li>CMS etablering</li><li>Tablet + telefon</li></ul><span class="tg t3">Feature</span></div>
       </div>
 
-      <div class="c" data-cat="task">
+      <div class="c" data-id="varelager" data-links="warehouse-app,master-api" data-cat="task">
         <div class="c-h"><div class="c-ico" style="background:rgba(239,68,68,.1);color:#ef4444">📦</div>
-          <div><div class="c-t">Varelagerstyring</div><div class="c-s">Stock & production</div></div></div>
-        <div class="c-b"><ul><li>Indkøb & produktion</li><li>Lagerstyring</li><li>→ Data Center</li></ul><span class="tg t3">Planlagt</span></div>
+          <div><div class="c-t">Varelagerstyring</div><div class="c-s">Stock & production · Warehouse App</div></div></div>
+        <div class="c-b"><ul><li>Indkøb & produktion</li><li>Lagerstyring via Warehouse App</li><li>Integration med Master API</li><li>→ Data Center</li></ul><span class="tg t3">Planlagt</span></div>
       </div>
 
       <div class="c" data-cat="task">
@@ -890,7 +884,6 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   <div class="li"><div class="lc" style="background:#333"></div> Source Code</div>
 </div>
 
-<div id="mm"></div>
 
 <script>
 const W=document.getElementById('wrap'),C=document.getElementById('cv');
