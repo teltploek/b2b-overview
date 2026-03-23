@@ -303,7 +303,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t7">Data</span></div></div>
       </div>
 
-      <div class="c" data-id="mapping-wizard" data-links="data-center,advarsels-dash" data-cat="prod">
+      <div class="c" data-id="mapping-wizard" data-links="data-center,advarsels-dash" data-expand="1" data-cat="prod">
         <div class="c-h"><div class="c-ico" style="background:rgba(6,182,212,.1);color:#06b6d4">🗺️</div>
           <div><div class="c-t">Produktmapping Wizard</div><div class="c-s">4-trins guide · AI-oversættelse</div></div></div>
         <div class="c-b"><ul>
@@ -313,6 +313,11 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Trin 4: Gennemgang & godkend</li>
           <li>Batch-baseret per leverandør</li>
         </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t5">AI</span></div></div>
+        <div class="c-expand">
+<h5>Storyline</h5><p>Som produktansvarlig ønsker jeg en guidet wizard til at mappe leverandørdata, så produkter får konsistente beskrivelser, farver og materialer.</p>
+<h5>Beskrivelse</h5><p>4-trins wizard med AI-assisteret oversættelse og batch-godkendelse. Datakilder: PF Concept, Midocean, Xindao, ID, New Wave, Texet, Neutral, Storm Textil — ugentlig sync via REST API.</p>
+<h5>Giving 2.0 — Master Data-problem</h5><p>Giving 2.0 er loaded på nopCommerce (Sebastian, 23-03). Louise validerer live-produkter og tjekker materialer + long descriptions. Leverandøren angiver alle materialer i stedet for kun det primære, hvilket kan være misvisende. Produkttype-feltet er fritekst og indeholder inkonsistente værdier (f.eks. "Stearinlys" vs "Sterinlys" vs "Stempelkande" vs "Sterilisator"). Casper: dette viser behovet for Master Data med dropdowns i stedet for fritekst.</p>
+<h5>Næste skridt</h5><ul class="ac-list"><li>Implementér dropdown-baserede produkttyper (Master Data)</li><li>AI-assisteret materiale-mapping i Dashboard</li><li>Validering af Giving 2.0-produkter (Louise)</li><li>Opdatering af long descriptions og materialer</li></ul></div>
       </div>
 
       <div class="c" data-id="prisstyring" data-links="advarsels-dash,mapping-wizard" data-cat="prod">
@@ -826,6 +831,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
       <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Fanshop produkter</div><div class="ds">Hardcoded per klub</div></div></div>
       <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Legacy dual-DB</div><div class="ds">nopCommerce afhængighed</div></div></div>
       <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">OpenAI API-nøgle</div><div class="ds">Ikke konfigureret i Data Center</div></div></div>
+      <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Fritekst produkttyper</div><div class="ds">Giver inkonsistens (Stearinlys/Sterinlys) — kræver dropdowns via Master Data</div></div></div>
       <div class="c-sm" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">Virus på B2BSport server</div><div class="ds">Windows Defender trojan — design demo, ikke produktion</div></div></div>
       <div class="c-sm" style="border-color:rgba(239,68,68,.1)"><span class="ic">🔴</span><div><div class="nm">Server nedetid (gentagen)</div><div class="ds">Node.js lukkes ikke korrekt — root cause analyse i gang</div></div></div>
       <div class="c-sm" style="border-color:rgba(245,158,11,.1)"><span class="ic">🟡</span><div><div class="nm">Azure subscription skiftet</div><div class="ds">Gammel slettet (blob logging tabt) — ny oprettet</div></div></div>
