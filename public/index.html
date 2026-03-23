@@ -161,6 +161,13 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
 .sb-warn{background:rgba(245,158,11,.1);color:#b45309}
 .sb-err{background:rgba(220,38,38,.1);color:#dc2626}
 
+/* ── MINIMAP ── */
+#minimap{position:fixed;bottom:12px;right:12px;z-index:998;background:rgba(255,255,255,.95);border:1px solid rgba(0,0,0,.12);border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.1);overflow:hidden;cursor:pointer;transition:opacity .2s}
+#minimap:hover{box-shadow:0 4px 18px rgba(0,0,0,.16)}
+#minimap canvas{display:block;border-radius:7px}
+#mm-viewport{position:absolute;border:2px solid rgba(79,109,245,.7);background:rgba(79,109,245,.08);border-radius:2px;pointer-events:none;transition:none}
+#mm-label{position:absolute;top:4px;left:6px;font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:rgba(0,0,0,.3);pointer-events:none}
+
 /* ── MOBILE RESPONSIVE ── */
 @media(max-width:768px){
   #bar{flex-wrap:wrap;height:auto;padding:8px 12px;gap:6px}
@@ -173,6 +180,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   #leg{bottom:auto;top:92px;left:8px;padding:5px 8px;border-radius:5px;max-width:120px;opacity:.85}
   #leg h4{font-size:7px}
   .li{font-size:7.5px}
+  #minimap{display:none}
   #modal-box{max-width:92vw;max-height:85vh}
   #modal-body{font-size:13px}
   #modal-body h5{font-size:11px}
@@ -311,7 +319,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Nye produkter & varianter</li>
           <li>Ikke-på-lager tracking</li>
           <li>Massehandlinger (løs/ignorer)</li>
-        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t7">Data</span></div></div>
+        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t7">Data</span></div><a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-crm-hr-dashboard?path=/datacontrol" target="_blank">datacontrol</a></div>
       </div>
 
       <div class="c" data-id="mapping-wizard" data-links="data-center,advarsels-dash" data-expand="1" data-cat="prod" data-status="live" data-needs="dropdown-produkttyper;ai-materiale-mapping;giving-2.0-validering" data-repo="b2b-crm-hr-dashboard/datacontrol">
@@ -323,7 +331,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Trin 3: Materiale & produkttype</li>
           <li>Trin 4: Gennemgang & godkend</li>
           <li>Batch-baseret per leverandør</li>
-        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t5">AI</span></div></div>
+        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t5">AI</span></div><a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-crm-hr-dashboard?path=/datacontrol" target="_blank">datacontrol</a></div>
         <div class="c-expand">
 <h5>Storyline</h5><p>Som produktansvarlig ønsker jeg en guidet wizard til at mappe leverandørdata, så produkter får konsistente beskrivelser, farver og materialer.</p>
 <h5>Beskrivelse</h5><p>4-trins wizard med AI-assisteret oversættelse og batch-godkendelse. Datakilder: PF Concept, Midocean, Xindao, ID, New Wave, Texet, Neutral, Storm Textil — ugentlig sync via REST API.</p>
@@ -340,7 +348,7 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
           <li>Kommerciel afrunding</li>
           <li>Bulk godkend/afvis</li>
           <li>Dismissal log med begrundelse</li>
-        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t7">Priser</span></div></div>
+        </ul><div style="margin-top:3px"><span class="tg t1">Live</span><span class="tg t7">Priser</span></div><a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-crm-hr-dashboard?path=/datacontrol" target="_blank">datacontrol</a></div>
       </div>
 
     </div>
@@ -397,14 +405,14 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
     <div class="cards cards-6">
       <div class="c-sm"><span class="ic">💳</span><div><div class="nm">Bambora</div><div class="ds">Betalinger</div></div></div>
       <div class="c-sm"><span class="ic">📒</span><div><div class="nm">e-conomic</div><div class="ds">Regnskab</div></div></div>
-      <div class="c-sm"><span class="ic">☁️</span><div><div class="nm">Azure Blob</div><div class="ds">Order logs</div></div></div>
-      <div class="c-sm"><span class="ic">🔧</span><div><div class="nm">Azure DevOps</div><div class="ds">CI/CD pipelines + PBI sync</div></div></div>
-      <div class="c-sm"><span class="ic">🐙</span><div><div class="nm">GitHub</div><div class="ds">teltploek · 8 B2B repos</div></div></div>
-      <div class="c-sm"><span class="ic">🐛</span><div><div class="nm">Sentry</div><div class="ds">7 errors/uge · 1.1k transactions · CRM HR Dashboard</div></div></div>
+      <div class="c-sm"><span class="ic">☁️</span><div><div class="nm">Azure Blob</div><div class="ds">Order logs</div><a class="c-repo" href="https://portal.azure.com/#view/Microsoft_Azure_Storage/ContainerMenuBlade/~/overview" target="_blank">Azure Portal → Blob Storage</a></div></div>
+      <div class="c-sm"><span class="ic">🔧</span><div><div class="nm">Azure DevOps</div><div class="ds">CI/CD pipelines + PBI sync</div><a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_build" target="_blank">Pipelines</a> <a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_workitems" target="_blank">Work Items</a></div></div>
+      <div class="c-sm"><span class="ic">🐙</span><div><div class="nm">GitHub</div><div class="ds">teltploek · 8 B2B repos</div><a class="c-repo" href="https://github.com/teltploek?tab=repositories&q=b2b" target="_blank">github.com/teltploek</a></div></div>
+      <div class="c-sm"><span class="ic">🐛</span><div><div class="nm">Sentry</div><div class="ds">7 errors/uge · 1.1k transactions · CRM HR Dashboard</div><a class="c-repo" href="https://sentry.io" target="_blank">Sentry Dashboard</a></div></div>
       <div class="c-sm"><span class="ic">💬</span><div><div class="nm">Discord</div><div class="ds">Alerts</div></div></div>
       <div class="c-sm"><span class="ic">📣</span><div><div class="nm">Teams</div><div class="ds">Deploy notifications</div></div></div>
-      <div class="c-sm"><span class="ic">📊</span><div><div class="nm">Cloudflare</div><div class="ds">Web Analytics · 840 visits/uge · b2bpromotion.dk</div></div></div>
-      <div class="c-sm"><span class="ic">🍎</span><div><div class="nm">Apple TestFlight</div><div class="ds">Warehouse App iOS distribution</div></div></div>
+      <div class="c-sm"><span class="ic">📊</span><div><div class="nm">Cloudflare</div><div class="ds">Web Analytics · 840 visits/uge · b2bpromotion.dk</div><a class="c-repo" href="https://dash.cloudflare.com" target="_blank">Cloudflare Dashboard</a></div></div>
+      <div class="c-sm"><span class="ic">🍎</span><div><div class="nm">Apple TestFlight</div><div class="ds">Warehouse App iOS distribution</div><a class="c-repo" href="https://appstoreconnect.apple.com" target="_blank">App Store Connect</a></div></div>
       <div class="c-sm" data-repo="b2b-promotion-mail-service"><span class="ic">📧</span><div><div class="nm">Mail Service</div><div class="ds">Express/TS microservice · :3001 · Nodemailer + MSSQL</div><a class="c-repo" href="https://dev.azure.com/b2bpromotion/B2BPromotionDevelopment/_git/b2b-promotion-mail-service" target="_blank">b2b-promotion-mail-service</a></div></div>
     </div>
   </div>
@@ -873,6 +881,12 @@ body{background:#f4f5f7;overflow:hidden;font-family:'Segoe UI',system-ui,sans-se
   </div>
 </div>
 
+<div id="minimap">
+  <span id="mm-label">Minimap</span>
+  <canvas id="mm-canvas" width="220" height="140"></canvas>
+  <div id="mm-viewport"></div>
+</div>
+
 <div id="leg">
   <h4>Status</h4>
   <div class="li"><div class="lc" style="background:#34d399"></div> Live</div>
@@ -1043,6 +1057,113 @@ document.querySelectorAll('[data-expand]').forEach(card => {
     openModal(this);
   });
 });
+
+/* ── Minimap: renders live thumbnail of canvas with viewport indicator ── */
+(function(){
+  if(isMob)return; // skip on mobile
+  const mm=document.getElementById('minimap');
+  const mc=document.getElementById('mm-canvas');
+  const vp=document.getElementById('mm-viewport');
+  const ctx=mc.getContext('2d');
+  const board=document.querySelector('.board');
+  const MW=220,MH=140;
+
+  // Color map for zones
+  const zoneColors={
+    'core-apps':'#4f6df5','crm-dashboard':'#8b5cf6','integrations':'#06b6d4',
+    'customer-facing':'#ec4899','infrastructure':'#6b7280','source-code':'#374151',
+    'future-concepts':'#a855f7','data-layer':'#0ea5e9','giving':'#10b981',
+    'backlog':'#f59e0b','legacy':'#ef4444','kundeoplevelse':'#ec4899'
+  };
+  const defaultColor='#94a3b8';
+
+  function renderMinimap(){
+    const bw=board.scrollWidth, bh=board.scrollHeight;
+    const scale=Math.min(MW/bw, MH/bh);
+    ctx.clearRect(0,0,MW,MH);
+
+    // Background
+    ctx.fillStyle='#f4f5f7';
+    ctx.fillRect(0,0,MW,MH);
+
+    // Draw zones as colored rectangles
+    const zones=board.querySelectorAll('.zone');
+    zones.forEach(z=>{
+      const r=z.getBoundingClientRect();
+      const br=board.getBoundingClientRect();
+      const x=(r.left-br.left)*scale;
+      const y=(r.top-br.top)*scale;
+      const w=r.width*scale;
+      const h=r.height*scale;
+      const zoneId=z.dataset.zone||'';
+      ctx.fillStyle=zoneColors[zoneId]||defaultColor;
+      ctx.globalAlpha=0.15;
+      ctx.fillRect(x,y,w,h);
+      ctx.globalAlpha=0.4;
+      ctx.strokeStyle=zoneColors[zoneId]||defaultColor;
+      ctx.lineWidth=0.5;
+      ctx.strokeRect(x,y,w,h);
+    });
+
+    // Draw cards as small filled rectangles
+    const cards=board.querySelectorAll('.c,.c-sm,.repo-card');
+    cards.forEach(c=>{
+      const r=c.getBoundingClientRect();
+      const br=board.getBoundingClientRect();
+      const x=(r.left-br.left)*scale;
+      const y=(r.top-br.top)*scale;
+      const w=r.width*scale;
+      const h=r.height*scale;
+      // Determine color from parent zone
+      const pz=c.closest('.zone');
+      const zid=pz?pz.dataset.zone:'';
+      ctx.globalAlpha=0.5;
+      ctx.fillStyle=zoneColors[zid]||'#94a3b8';
+      ctx.fillRect(x,y,Math.max(w,1.5),Math.max(h,1));
+    });
+
+    ctx.globalAlpha=1;
+
+    // Update viewport indicator
+    const wrapR=W.getBoundingClientRect();
+    const br=board.getBoundingClientRect();
+    // Viewport in board-coordinates (accounting for pan + scale)
+    const vl=(-px)/s, vt=(-py)/s;
+    const vw=wrapR.width/s, vh=wrapR.height/s;
+    vp.style.left=(vl*scale)+'px';
+    vp.style.top=(vt*scale)+'px';
+    vp.style.width=Math.min(vw*scale,MW)+'px';
+    vp.style.height=Math.min(vh*scale,MH)+'px';
+  }
+
+  // Render on pan/zoom/resize
+  const origUpd=upd;
+  upd=function(){origUpd();renderMinimap();}
+
+  // Click minimap to navigate
+  let mmDrag=false;
+  function mmNav(e){
+    const rect=mc.getBoundingClientRect();
+    const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+    const bw=board.scrollWidth, bh=board.scrollHeight;
+    const scale=Math.min(MW/bw, MH/bh);
+    const wrapR=W.getBoundingClientRect();
+    // Convert minimap coords to board coords, center viewport there
+    const boardX=mx/scale;
+    const boardY=my/scale;
+    px=-(boardX-wrapR.width/(2*s))*s;
+    py=-(boardY-wrapR.height/(2*s))*s;
+    upd();
+  }
+  mm.addEventListener('mousedown',e=>{e.stopPropagation();mmDrag=true;mmNav(e);});
+  window.addEventListener('mousemove',e=>{if(mmDrag){e.preventDefault();mmNav(e);}});
+  window.addEventListener('mouseup',()=>{mmDrag=false;});
+
+  // Initial render after layout settles
+  setTimeout(renderMinimap,300);
+  setTimeout(renderMinimap,1000);
+  window.addEventListener('resize',renderMinimap);
+})();
 </script>
 
 <script type="application/ld+json" id="canvas-data">
